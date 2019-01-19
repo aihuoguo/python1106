@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.main-content {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.main-content li{
+    list-style: none;
+    height: 50px;
+    line-height: 50px;
+}
+
+.main-content li a{
+    font-size: 18px;
+}
