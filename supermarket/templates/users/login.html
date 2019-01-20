@@ -6,9 +6,13 @@
 {% endblock %}
 
 {% block content %}
-    <input type="text" name="mobile" id="mobile" placeholder="请输入用户名/手机号" class="login-name">
+    <form action="" method="post" class="form-horizontal">
+        {% csrf_token %}
+    <input type="text" name="username"  value="{{ request.POST.username }}" id="mobile" placeholder="请输入用户名/手机号" class="login-name">
+        <p class="text-danger">{{ form.errors.username.0 }}</p>
     <input type="password" name="password" id="password" placeholder="请输入密码" class="login-password">
-    <input type="button" class="login-btn" value="我要登录">
+        <p class="text-danger">{{ form.errors.password.0 }}</p>
+    <button type="submit" class="btn btn-success">登录</button>
     <div class="agree">
         <a href="reg.html">免费注册</a>
         <a href="forgetpassword.html" class="forget">忘记密码？</a>
@@ -20,4 +24,5 @@
         <li><a href=""><img src="{% static 'images/qqlogin.png' %}"/></a></li>
         <li><a href=""><img src="{% static 'images/sinalog.png' %}"/></a></li>
     </ul>
+    </form>
 {% endblock %}

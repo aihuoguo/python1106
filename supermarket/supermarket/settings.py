@@ -126,3 +126,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+#添加django中的缓存配置
+
+
+#修改默认sessioin的存储引擎

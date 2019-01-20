@@ -6,7 +6,7 @@ from django.core.validators import MinLengthValidator
 class Users(models.Model):
     username = models.CharField(max_length=20,
                                 validators=[
-                                    MinLengthValidator(20, '用户名至少20位')
+                                    MinLengthValidator(11, '用户名为11位')
                                 ])
     password = models.CharField(max_length=32)
 
