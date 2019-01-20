@@ -34,27 +34,36 @@ class RegisterView(View):# 注册
         form=RegisterModelForm(data)
         if form.is_valid():
             # 操作数据库
+            #获取清洗数据
             cleaned_data = form.cleaned_data
             # 创建用户
             user = Users()
             user.username = cleaned_data.get('username')
             user.password = set_password(cleaned_data.get('password'))
             user.save()
-
+            #跳转页面
             return redirect('用户:login')
         else:
+            #合成响应
             return render(request,'users/reg.html',context={'form':form})
 
 class LoginView(View): #登录
     def get(self,request):
         return render(request,'users/login.html')
+
     def post(self,request):
         # 接收参数
         data = request.POST
 
+        # 验证数据的合法性
         form = LoginModelForm(data)
-        #是否合法
         if form.is_valid():
-            return render(request,'users/infor.html')
+            # 验证成功
+            user = form.cleaned_data.get('user')
+            request.session['ID'] = user.pk
+            request.session['username'] = user.username
+            # 操作数据库
+            return redirect('用户:member')
         else:
+            # 合成响应
             return render(request,'users/login.html',{'form':form})

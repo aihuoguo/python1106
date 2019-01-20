@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>超市</title>
-        <meta name="description" content="">
-        <meta name="keywords" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta name="renderer" content="webkit">
-        <meta http-equiv="Cache-Control" content="no-siteapp" />
-        <link rel="icon" type="image/png" href="/theme/default/images/favicon.png">
-		<link href="css/amazeui.min.css" rel="stylesheet" type="text/css" />
-		<link href="css/style.css" rel="stylesheet" type="text/css" />
-		<script src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
-		<script src="js/popup.mini.js"></script>
-	</head>
+{% extends 'common/parent.html' %}
+{% load static %}
+
+{% block title %}
+    注册
+{% endblock %}
+
+{% block header %}
 	<body style="background: #f6f6f6;">
 		<header data-am-widget="header" class="am-header am-header-default sq-head ">
 			<h1 class="am-header-title">
@@ -22,6 +13,13 @@
             </h1>
 	    </header>
 	    <div style="height: 49px;"></div>
+
+        {% endblock %}
+
+{% block content %}
+
+<form action="" method="post" class="form-horizontal">
+        {% csrf_token %}
 	    <div class="member">
 	    	<div class="mem-tit">15078921546 
 	    		<a href="step.html" class="step"><img src="images/step.png" width="26"/></a>
@@ -76,7 +74,7 @@
 		    	<li><a href="infor.html"> <img src="images/1-icon4.png"> <p>个人资料</p></a></li>
 		    	<li><a href="gladdress.html"> <img src="images/1-icon5.png"> <p>收货地址</p></a></li>
 		    	<li><a href="saftystep.html"> <img src="images/1-icon6.png"> <p>安全设置</p></a></li>
-		    	<li><a href="money.html"> <img src="images/1-icon7.png"> <p>我的钱包</p></a></li>
+		    	<li><a href="money.html"> <img src="{% static 'images/1-icon7.png' %}"> <p>我的钱包</p></a></li>
 		    </ul>
 	    </div>
 	    <!--导航-->
@@ -84,7 +82,7 @@
       <li>
         <div class="am-gallery-item">
             <a href="job.html" class="">
-              <img src="images/m_03.png" />
+              <img src="{% static 'images/m_03.png' %}" />
               <p>我要兼职</p>
             </a>
         </div>
@@ -92,7 +90,7 @@
       <li>
         <div class="am-gallery-item">
             <a href="recommend.html" class="">
-              <img src="images/m_04.png" />
+              <img src="{% static 'images/m_04.png' %}" />
               <p>推荐有奖</p>
             </a>
         </div>
@@ -100,7 +98,7 @@
       <li>
         <div class="am-gallery-item">
             <a href="myrecommend.html" class="">
-              <img src="images/m_05.png" />
+              <img src="{% static 'images/m_05.png' %}" />
               <p>我的推荐</p>
             </a>
         </div>
@@ -108,7 +106,7 @@
       <li>
         <div class="am-gallery-item">
             <a href="" class="">
-              <img src="images/m_06.png" />
+              <img src="{% static 'images/m_06.png' %}" />
               <p>我的佣金</p>
             </a>
         </div>
@@ -116,7 +114,7 @@
       <li>
         <div class="am-gallery-item">
             <a href="yhq.html" class="">
-              <img src="images/m_02.png" />
+              <img src="{% static 'images/m_02.png' %}" />
               <p>我的红包</p>
             </a>
         </div>
@@ -124,7 +122,7 @@
       <li>
         <div class="am-gallery-item">
             <a href="message.html" class="">
-              <img src="images/m_07.png" />
+              <img src="{% static 'images/m_07.png' %}" />
               <p>我的动态</p>
             </a>
         </div>
@@ -132,7 +130,7 @@
       <li>
         <div class="am-gallery-item">
             <a href="javascript:;" class="index-qd">
-              <img src="images/m_08.png" />
+              <img src="{% static 'images/m_08.png' %}" />
               <p>客服中心</p>
             </a>
         </div>
@@ -140,7 +138,7 @@
       <li>
         <div class="am-gallery-item">
             <a href="" class="">
-              <img src="images/m_09.png" />
+              <img src="{% static 'images/m_09.png' %}" />
               <p>安全退出</p>
             </a>
         </div>
@@ -155,11 +153,11 @@
 	</div>
 	<div class="dq-text">
 		<a href="http://wpa.qq.com/msgrd?v=3&uin=123456789&site=qq&menu=yes">
-			<img src="images/contactqq.png" width="50" />
+			<img src="{% static 'images/contactqq.png' %}" width="50" />
 			<p class="contactqq">联系QQ</p>
 		</a>
 		<a href="tel:0791-12345678">
-			<img src="images/contacttele.png"  width="50" />
+			<img src="{% static 'images/contacttele.png' %}"  width="50" />
 			<p class="contacttele">呼叫电话</p>
 		</a>
 	</div>
@@ -212,7 +210,7 @@
 	})()
 </script>
  
-<script src="js/jquery.min.js"></script>
-<script src="js/amazeui.min.js"></script>
-	</body>
-</html>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/amazeui.min.js' %}"></script>
+</form>
+{% endblock %}
