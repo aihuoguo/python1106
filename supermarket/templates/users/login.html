@@ -14,8 +14,8 @@
         <p class="text-danger">{{ form.errors.password.0 }}</p>
     <button type="submit" class="btn btn-success">登录</button>
     <div class="agree">
-        <a href="reg.html">免费注册</a>
-        <a href="forgetpassword.html" class="forget">忘记密码？</a>
+        <a href="{% url '用户:register' %}">免费注册</a>
+        <a href="{% url '用户:forget_pwd' %}" class="forget">忘记密码？</a>
     </div>
     <div class="line"></div>
     <div class="line-text">第三方账号登录</div>

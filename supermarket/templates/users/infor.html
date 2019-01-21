@@ -5,25 +5,44 @@
     个人资料
 {% endblock %}
 
+{% block header %}
+
+		<header data-am-widget="header" class="am-header am-header-default sq-head ">
+			<div class="am-header-left am-header-nav">
+				<a href="javascript:history.back()" class="">
+					<i class="am-icon-chevron-left"></i>
+				</a>
+			</div>
+			<h1 class="am-header-title">
+  	            <a href="" class="">个人资料</a>
+            </h1>
+	    </header>
+    <div style="height: 49px;"></div>
+{% endblock %}
+
+
+
 {% block content %}
     <form action="" method="post" class="form-horizontal">
         {% csrf_token %}
+	    <ul class="safty1">
 	    	<li>
-	    		<a href="">
-	    			<i style="margin-top: 25px;">头像</i>
+
+	    			<i style="margin-top: 25px;">头像
+                    </i>
 	    			<div class="infor-pic">
-	    				<img src="{% static 'images/infortx.png' %}" />
+	    				<img src="{% static 'images/touxiang.jpg' %}"/>
 	    			</div>
-	    		</a>
+
 	    	</li>
 	    	<li>
-	    		<a href="">
+
 	    			<i>昵称</i>
-	    			<input class="infor-tele" placeholder="默契"/>	    			
-	    		</a>
+	    			<input class="infor-tele" placeholder="王大亮"/>
+
 	    	</li>
 	    	<li>
-	    		<a href="">
+
 	    			<i>性别</i>
 	    			<i class="infor-tele">
 	    				<label class="am-radio-inline">
@@ -33,12 +52,12 @@
 				          <input type="radio" name="radio10" value="1" data-am-ucheck>女
 				        </label>
 	    			</i>
-	    		</a>
+
 	    	</li><li>
-	    		<a href="">
+
 	    			<i>生日</i>
                     <input class="infor-tele" placeholder="出生日期"/>
-	    		</a>
+
 	    	</li>
 	    </ul>
 	    <div style="height: 10px; background: #efefef;"></div>
@@ -61,6 +80,8 @@
 	    	</li>
 	    </ul>
 	    <script src="{% static 'js/jquery.min.js' %}"></script>
-        <script src="{% static 'js/amazeui.min.js' %}"></script>
-        </form>
-            {% endblock %}
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+         <button type="submit" class="btn btn-success">保存修改</button>
+  </form>
+
+{% endblock %}

@@ -1,13 +1,14 @@
 from django.conf.urls import url
 
-from users.views import member, login, reg, RegisterView, LoginView, info
+from users.views import RegisterView, LoginView, InfoView, MemberView, forget_pwd, safe, xiugaipwd
 
 urlpatterns = [
-    url(r'^member/$',member,name='member'), #  个人中心
-    # url(r'^login/$',login,name='login'), # 登录
-    # url(r'^reg/$',reg,name='reg'), # 注册
-    url(r'register/$',RegisterView.as_view(),name='注册'),
-    url(r'login/$',LoginView.as_view(),name='登录'),
-    url(r'info/$',info,name='个人资料'),
+    url(r'register/$',RegisterView.as_view(),name='register'),
+    url(r'login/$',LoginView.as_view(),name='login'),
+    url(r'info/$',InfoView.as_view(),name='info'),
+    url(r'member/$',MemberView.as_view(),name='member'),
+    url(r'forget_pwd',forget_pwd,name='forget_pwd'),
+    url(r'safe',safe,name='safe'),
+    url(r'xiugaipwd',xiugaipwd,name='xiugaipwd'),
 
 ]

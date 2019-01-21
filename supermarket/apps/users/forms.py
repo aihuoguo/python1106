@@ -94,3 +94,18 @@ class LoginModelForm(forms.ModelForm):
         return self.cleaned_data
 
 
+# 个人资料表单模型类
+class InfoModelForm(forms.ModelForm):
+
+    class Meta:
+        model = Users
+        fields = ['birth_time','school_name','address','hometown']
+
+        error_messages = {
+            "tel": {
+                'required': '用户名必须填写',
+                'max_length': '用户名长度不能大于10',
+            }
+
+        }
+
