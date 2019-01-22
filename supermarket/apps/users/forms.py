@@ -1,4 +1,5 @@
 from django import forms
+from django_redis import get_redis_connection
 
 from users import set_password
 from users.models import Users
@@ -20,6 +21,14 @@ class RegisterModelForm(forms.ModelForm):
         'max_length': '密码最大长度为16位',
     })
 
+    captcha=forms.CharField(max_length=6,
+                            error_messages={
+                                'required':'验证码必须填写'
+                            })
+    agree=forms.BooleanField(error_messages={
+        'required':'必须同意用户协议'
+    })
+
     class Meta:
         model = Users
         fields = ['username']
@@ -38,8 +47,23 @@ class RegisterModelForm(forms.ModelForm):
         # 如果不一样
         if pwd and repwd and pwd != repwd:
             raise forms.ValidationError({'repassword': '两次密码不一致'})
-        else:
-            return self.cleaned_data
+
+        #验证用户输入的验证码和redis的验证嘛是否一致
+        try:
+            captcha = self.cleaned_data.get('captcha')
+            username = self.cleaned_data.get('username','')
+            # 获取redis中的
+            r = get_redis_connection()
+            yz_code = r.get(username)  # 二进制, 转码
+            yz_code = yz_code.decode('utf-8')
+            # 比对
+            if captcha and captcha != yz_code:
+                raise forms.ValidationError({"captcha": "验证码输入错误!"})
+        except:
+            raise forms.ValidationError({"captcha": "验证码输入错误!"})
+        return self.cleaned_data
+
+
 
     # 验证用户是否存在
     def clean_username(self):

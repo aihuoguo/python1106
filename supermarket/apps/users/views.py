@@ -1,15 +1,21 @@
-from django.http import HttpResponse
+import random
+import re
+import uuid
+
+from django.http import HttpResponse, JsonResponse, request
 from django.shortcuts import render, redirect
 
 # Create your views here.
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
+from django_redis import get_redis_connection
 
 from db.base_view import VerifyLoginView
+
 from users import set_password
 from users.forms import RegisterModelForm, LoginModelForm, InfoModelForm
-from users.helper import login, check_login
+from users.helper import login, check_login, send_sms
 from users.models import Users
 
 
@@ -114,3 +120,45 @@ def safe(request):
 
 def xiugaipwd(request):
     return render(request, 'users/password.html')
+
+
+class FsMsgView(View):
+    def get(self,request):
+        pass
+    def post(self,request):
+        # 接受参数 手机号码
+        username=request.POST.get('username','')
+        # 验证格式
+        res=re.search('^1[3-9]\d{9}',username)
+        if res is None:
+            #如果格式不正确返回错误信息
+            return JsonResponse({'error':1,'errormsg':'手机号码格式错误'})
+        else:
+            #生成随机数字字符串
+            yz_cade=''.join(str(random.randint(0,9))for r in range(1,6))
+            print('***********随机验证码为*{}**************'.format(yz_cade))
+            #保存验证码到redis
+            #获取连接
+            r=get_redis_connection()
+            #保存对应的手机验证码
+            r.set(username,yz_cade)
+            r.expire(username,60)
+            #当前手机号验证码的次数
+            key_times='{}_times'.format(username)
+            now_times=r.get(key_times)
+            #保存手机发送验证码的次数
+            if now_times is None or int(now_times) < 5:
+                r.incr(key_times)
+                #设置一个过期事件
+                r.expire(username,10)
+            else:
+                return JsonResponse({'error':1,'errmsg':'发送次数过多'})
+
+            __business_id = uuid.uuid1()
+            params = "{\"code\":\"%s\",\"product\":\"跳舞的兔子\"}" % yz_cade
+            # print(params)
+            rs = send_sms(__business_id, username, "注册验证", "SMS_2245271", params)
+            print(rs.decode('utf-8'))
+            return JsonResponse({'error':0})
+
+

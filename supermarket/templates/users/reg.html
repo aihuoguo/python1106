@@ -4,40 +4,102 @@
 {% block title %}
     注册
 {% endblock %}
- {% block header %}
-        <header data-am-widget="header" class="am-header am-header-default sq-head ">
-            <div class="am-header-left am-header-nav">
-                <a href="javascript:history.back()" class="">
-                    <i class="am-icon-chevron-left"></i>
-                </a>
-            </div>
-            <h1 class="am-header-title">
-                <a href="" class="">注册</a>
-            </h1>
-        </header>
-        <div style="height: 49px;"></div>
-        <div style="height: 3rem;"></div>
-    {% endblock %}
+{% block header %}
+    <header data-am-widget="header" class="am-header am-header-default sq-head ">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:history.back()" class="">
+                <i class="am-icon-chevron-left"></i>
+            </a>
+        </div>
+        <h1 class="am-header-title">
+            <a href="" class="">注册</a>
+        </h1>
+    </header>
+    <div style="height: 49px;"></div>
+    <div style="height: 3rem;"></div>
+{% endblock %}
 
 {% block content %}
     <form action="" method="post" class="form-horizontal">
         {% csrf_token %}
-        <input type="text" name="username" value="{{ request.POST.username }}" placeholder="请输入手机号" class="login-name">
-                  <p class="text-danger">{{ form.errors.username.0 }}</p>
+        <input type="text" name="username" value="{{ request.POST.username }}" id="username" placeholder="请输入手机号"
+               class="login-name">
+        <p class="text-danger">{{ form.errors.username.0 }}</p>
         <input type="password" name="password" placeholder="请输入密码" class="login-password">
-                  <p class="text-danger">{{ form.errors.password.0 }}</p>
+        <p class="text-danger">{{ form.errors.password.0 }}</p>
         <input type="password" name="repassword" placeholder="确认密码" class="login-name">
-                   <p class="text-danger">{{ form.errors.repassword.0 }}</p>
-{#        <div class="yzm" style="margin-top: 1.5rem;">#}
-{#            <input type="text" class="reg-yzm" placeholder="输入验证码"/>#}
-{#            <input type="button" class="yzm-hq" value="获取验证码"/>#}
-{#        </div>#}
+        <p class="text-danger">{{ form.errors.repassword.0 }}</p>
+        <div class="yzm" style="margin-top: 1.5rem;">
+            <input type="text" class="reg-yzm" name="captcha" placeholder="输入验证码"/>
+            <input type="button" class="yzm-hq" value="获取验证码"/>
+        </div>
+         <p class="text-danger">{{ form.errors.captcha.0 }}</p>
         <button type="submit" class="btn btn-success">注册</button>
         <div class="agree">
-            <input type="checkbox" name="checkbox" value="同意" checked="">&nbsp;同意
+            <input type="checkbox" name="agree" value="同意" checked="">&nbsp;同意
+            <p class="text-danger">{{ form.errors.agree.0 }}</p>
             <a href="" class="xy">《用户协议》</a>
-            <div class="r-login">已有账号，请<a href="{% url '用户:login'%}" class="l-login">登录</a></div>
+            <div class="r-login">已有账号，请<a href="{% url '用户:login' %}" class="l-login">登录</a></div>
         </div>
     </form>
 
+{% endblock %}
+{% block footer_js %}
+    <script type="application/javascript">
+        $(function () {
+            //绑定点击事件
+            $('.yzm-hq').on('click', function () {
+                {#console.debug(6666)#}
+                //获取手机号,验证手机号格式
+                var username = $('#username').val();
+                var reg = /^1[3-9]\d{9}$/;
+                {#console.debug(reg.test(username));#}
+                if (!reg.test(username)) {
+                    alert('手机号格式错误')
+                }
+                var self = this
+                //3. 发送ajax请求
+                $.ajax({
+                    type: 'post',
+                    url: '{% url "用户:FsMsg" %}',
+                    data: {'username': username, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                    dataType: "json",
+                    success: function (data) {
+                        //4. 判断是否发送成功
+                        if (data.error == 0) {
+
+                            //1. 按钮颜色变灰
+                            $(self).css("background-color", "gray");
+                            //2. 按钮不能再点击
+                            $(self).prop('disabled', true);
+                            //3. 开始倒计时
+                            var time = 60;
+                            var msg = time + "秒后重新发送";
+                            $(self).val(msg);
+                            var timer = window.setInterval(function () {
+                                time -= 1;
+                                if (time == 0) {
+                                    //1. 按钮颜色变绿
+                                    $(self).css("background-color", "#15bb1b");
+                                    //2. 按钮能点击
+                                    $(self).prop('disabled', false);
+                                    //3. 返回原来的提示文字
+                                    $(self).val("获取验证码");
+                                    //4. 清除定时
+                                    window.clearInterval(timer);
+                                    //返回
+                                    return;
+                                }
+                                msg = time + "秒后重新发送";
+                                $(self).val(msg);
+                            }, 1000);
+
+                        } else {
+                            alert('短信验证码发送失败')
+                        }
+                    }
+                })
+            })
+        })
+    </script>
 {% endblock %}
