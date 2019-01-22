@@ -87,19 +87,17 @@ class InfoView(View):
             # 操作数据库
             # 获取清洗数据
             cleaned_data = form.cleaned_data
-            # 创建用户
-            user = Users()
-            user.username = cleaned_data.get('username')
-            user.tel = cleaned_data.get('tel')
-            user.birth_time = cleaned_data.get('birth_time')
-            user.sex = cleaned_data.get('sex')
-            user.school_name = cleaned_data.get('school_name')
-            user.location = cleaned_data.get('location')
-            user.hometown =cleaned_data.get('hometown')
-
-            user.save()
-
-
+            # 更新
+            Users.objects.filter(pk=id).update(username=cleaned_data.get('username'),
+                                               tel=cleaned_data.get('tel'),
+                                               birth_time=cleaned_data.get('birth_time'),
+                                               sex=cleaned_data.get('sex'),
+                                               school_name=cleaned_data.get('school_name'),
+                                               location=cleaned_data.get('location'),
+                                               hometown=cleaned_data.get('hometown'),
+                                               password=set_password(cleaned_data.get('password')
+                                                                     )
+                                               )
             # 跳转页面
             return redirect('用户:member')
         else:
