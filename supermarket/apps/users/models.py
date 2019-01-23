@@ -44,6 +44,10 @@ class Users(models.Model):
                                null=True,
                                blank=True,
                                )
+    #头像
+    logo = models.ImageField(upload_to='shop/%Y%m/%d',
+                             default='head/memtx.png',
+                             verbose_name='店铺LOGO')
 
     # 是否删除
     is_delete = models.BooleanField(default=False)
@@ -57,4 +61,6 @@ class Users(models.Model):
 
     class Meta:
         db_table = "users"
+        verbose_name='用户管理'
+        verbose_name_plural=verbose_name
 

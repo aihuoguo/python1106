@@ -18,6 +18,18 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css"/>
     <script src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
     <script src="{% static 'js/time.js' %}"></script>
+    <script src="{% static 'js/popup.mini.js' %}"></script>
+<script>
+        	function changeImage(){
+              document.getElementById("imgflag").src="images/redherat.png";
+           }
+        </script>
+
+		<style>
+			.am-slider-default .am-control-nav{ text-align: center;}
+			.am-slider-default .am-control-nav li a.am-active{ background: #cb2527;}
+			.am-slider-default .am-control-nav li a{ border: 0; width: 10px; height: 10px;}
+		</style>
 
     {% block head_css %}
         {#      写css      #}
@@ -50,8 +62,8 @@
         <input type="password" name="password" id="password" placeholder="请输入密码" class="login-password">
         <input type="button" class="login-btn" value="我要登录">
         <div class="agree">
-            <a href="">免费注册</a>
-            <a href="" class="forget">忘记密码？</a>
+            <a href="reg.html">免费注册</a>
+            <a href="forgetpassword.html" class="forget">忘记密码？</a>
         </div>
         <div class="line"></div>
         <div class="line-text">第三方账号登录</div>
@@ -65,6 +77,12 @@
     {% block footer %}
 
     {% endblock %}
+
+    <script type='text/javascript'>
+	(function(){
+		 new PopUp_api({el:'.index-qd',html:'.qd-box'});
+	})()
+    </script>
 
     {% block footer_js %}
     

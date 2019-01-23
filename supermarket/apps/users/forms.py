@@ -133,3 +133,23 @@ class InfoModelForm(forms.ModelForm):
 
         }
 
+# 修改密码表单模型类
+# class UpdatePwdForm(forms.ModelForm):
+#     class Meta:
+#         model=Users
+#
+#     def clean(self):
+#         # 验证用户名
+#         username = self.cleaned_data.get('username')
+#         # 查询数据库
+#         try:
+#             user = Users.objects.get(username=username)
+#         except Users.DoesNotExist:
+#             raise forms.ValidationError({'username': '用户名错误'})
+#         # 验证密码
+#         password = self.cleaned_data.get('password','')
+#         if user.password != set_password(password):
+#             raise forms.ValidationError({'password': '密码错误'})
+#         # 返回清洗的数据
+#         self.cleaned_data['user'] = user
+#         return self.cleaned_data

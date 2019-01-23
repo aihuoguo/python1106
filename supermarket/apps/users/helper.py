@@ -14,6 +14,7 @@ from supermarket.settings import ACCESS_KEY_ID, ACCESS_KEY_SECRET
 def login(request,user):
     request.session['ID']=user.pk
     request.session['username']=user.username
+    request.session['logo']=user.logo
     #关闭浏览器就消失
     request.session.set_expiry(0)
 

@@ -81,34 +81,34 @@ class MemberView(View):
 
 
 # 个人资料
-class InfoView(View):
+class InfoView(VerifyLoginView):
     def get(self, request):
-        return render(request, 'users/infor.html')
-    def post(self, request):
-        # 接受参数
+        #获取session得id
+        user_id=request.session.get('ID')
+        #获取用户资料
+        user=Users.objects.get(pk=user_id)
+        # 渲染页面
+        context={
+            'user': user
+        }
+        return render(request, 'users/infor.html',context=context)
+    def post(self,request):
+        #接收参数
         data = request.POST
-        form = InfoModelForm(data)
-        # 验证是否合法
-        if form.is_valid():
-            # 操作数据库
-            # 获取清洗数据
-            cleaned_data = form.cleaned_data
-            # 更新
-            Users.objects.filter(pk=id).update(username=cleaned_data.get('username'),
-                                               tel=cleaned_data.get('tel'),
-                                               birth_time=cleaned_data.get('birth_time'),
-                                               sex=cleaned_data.get('sex'),
-                                               school_name=cleaned_data.get('school_name'),
-                                               location=cleaned_data.get('location'),
-                                               hometown=cleaned_data.get('hometown'),
-                                               password=set_password(cleaned_data.get('password')
-                                                                     )
-                                               )
-            # 跳转页面
-            return redirect('用户:member')
-        else:
-            # 合成响应
-            return render(request, 'users/infor.html', context={'form': form})
+        logo = request.FILES.get('logo')
+        user_id = request.session.get('ID')
+        #操作数据
+        user = Users.objects.get(pk=user_id)
+        user.tel = data.get('tel')
+        if logo is not None:
+            user.logo = logo
+        user.save()
+        #同时修改session
+        login(request,user)
+
+        # 合成响应
+        return redirect('用户:member')
+
 
 
 
@@ -118,10 +118,17 @@ def forget_pwd(request):
 def safe(request):
     return render(request,'users/saftystep.html')
 
-def xiugaipwd(request):
-    return render(request, 'users/password.html')
+# 修改密码
+class UpdatePwdView(View):
+    def get(self,request):
+        return render(request,'users/password.html')
+    def post(self,request):
+        #接受参数
+        id=request.session.get('id')
+        data = request.POST
+        form=InfoModelForm(data)
 
-
+# 发送短信验证注册
 class FsMsgView(View):
     def get(self,request):
         pass

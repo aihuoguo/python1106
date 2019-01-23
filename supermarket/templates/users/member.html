@@ -2,30 +2,25 @@
 {% load static %}
 
 {% block title %}
-    个人中心
+ 个人中心
 {% endblock %}
 
 {% block header %}
-	<body style="background: #f6f6f6;">
-		<header data-am-widget="header" class="am-header am-header-default sq-head ">
+<header data-am-widget="header" class="am-header am-header-default sq-head ">
 			<h1 class="am-header-title">
   	            <a href="" class="">个人中心</a>
             </h1>
 	    </header>
 	    <div style="height: 49px;"></div>
-
-        {% endblock %}
+		{% endblock %}
 
 {% block content %}
-
-<form action="" method="post" class="form-horizontal">
-        {% csrf_token %}
-	    <div class="member">
-	    	<div class="mem-tit">
+    <div class="member">
+	    	<div class="mem-tit">{{ request.session.username }}
 	    		<a href="step.html" class="step"><img src="{% static 'images/step.png' %}" width="26"/></a>
 	    	</div>
 	    	<div class="mem-pic">
-		    	<div class="mem-pic-bg" style="background-image: url({% static 'images/touxiang.jpg' %});"></div>
+		    	<div class="mem-pic-bg" style="background-image: url({{ MEDIA_URL }}{{ request.session.logo }});"></div>
 	    	</div>
 	    	<ul class="member-menu">
 			<li>
@@ -72,9 +67,9 @@
 		  	</div>
 		    <ul class="user-nav">
 		    	<li><a href="{% url '用户:info' %}"> <img src="{% static 'images/1-icon4.png' %}"> <p>个人资料</p></a></li>
-		    	<li><a href="gladdress.html"> <img src="{% static 'images/1-icon5.png' %}"> <p>收货地址</p></a></li>
-		    	<li><a href="{% url '用户:safe' %}"> <img src="{% static 'images/1-icon6.png' %}"> <p>安全设置</p></a></li>
-		    	<li><a href="money.html"> <img src="{% static 'images/1-icon7.png' %}"> <p>我的钱包</p></a></li>
+		    	<li><a href="gladdress.html"> <img src="{% static 'images/1-icon4.png' %}"> <p>收货地址</p></a></li>
+		    	<li><a href="saftystep.html"> <img src="{% static 'images/1-icon4.png' %}"> <p>安全设置</p></a></li>
+		    	<li><a href="money.html"> <img src="{% static 'images/1-icon4.png' %}"> <p>我的钱包</p></a></li>
 		    </ul>
 	    </div>
 	    <!--导航-->
@@ -163,10 +158,14 @@
 	</div>
 </div>
 <!--客服中心-->
+{% endblock %}
+
+ {% block footer %}
+
       <!--底部-->
  <div style="height: 55px;"></div>
  <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default sq-foot am-no-layout" id="">
-      <ul class="am-navbar-nav am-cf am-avg-sm-5">   
+      <ul class="am-navbar-nav am-cf am-avg-sm-5">
           <li>
             <a href="index.html" class="">
                 <span class="am-icon-home"></span>
@@ -191,7 +190,7 @@
                 <span class="am-navbar-label">订单</span>
             </a>
           </li>
- 
+
           <li>
             <a href="member.html" class="curr">
                 <span class="am-icon-user"></span>
@@ -200,17 +199,7 @@
           </li>
       </ul>
 </div>
+
+ {% endblock %}
  
  
- 
- 
- <script type='text/javascript'>
-	(function(){
-		 new PopUp_api({el:'.index-qd',html:'.qd-box'});
-	})()
-</script>
- 
-<script src="{% static 'js/jquery.min.js' %}"></script>
-<script src="{% static 'js/amazeui.min.js' %}"></script>
-</form>
-{% endblock %}

@@ -27,7 +27,7 @@ SECRET_KEY = '89)pkzi=119im03@h!@q7kronr*#pq_a_dbo@#7ezc(r+&63h+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -69,6 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',  # 添加渲染MEDIA_URL变量
             ],
         },
     },
@@ -110,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
 TIME_ZONE = 'UTC'
 
@@ -151,4 +152,9 @@ SESSION_CACHE_ALIAS = "default"
 ACCESS_KEY_ID = "LTAI2qSiJdWP87em"
 ACCESS_KEY_SECRET = "FzORQ587PgGBoOAdmxzCjaxQi8klUi"
 
+#配置上传图片 定义一个变量叫MEDIA_URL。（目的是分配一个资源URL）
+MEDIA_URL = "/static/media/"
+
+# 配置该URL对应的物理目录存储地址
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 
