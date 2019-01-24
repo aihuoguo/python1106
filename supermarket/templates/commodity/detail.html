@@ -37,9 +37,9 @@
     <!--图片轮换-->
 		<div class="am-slider am-slider-default" data-am-flexslider id="demo-slider-0">
 		  <ul class="am-slides">
-                  {% for goodsphoto in goods_sku.goodsphoto_set.all %}
-              <li><img src="{{ MEDIA_URL }}{{ goodsphoto.img_url }}" /></li>
-              {% endfor %}
+                  {% for photo in goods_sku.goodsphoto_set.all %}
+                      <li><img src="{{ MEDIA_URL }}{{ photo.img_url }}"/></li>
+                  {% endfor %}
               
 
 
@@ -72,7 +72,7 @@
 
 		  <div class="am-tabs-bd">
 		    <div class="am-tab-panel am-fade am-in am-active detail " id="tab1" >
-		           {{ goods_sku.goods_spu.spu_detail }}
+		           {{ goods_sku.goods_spu.spu_detail |safe}}
 		    </div>
 		    <div class="am-tab-panel am-fade detail " id="tab2">
 		         <!--<div class="comment">

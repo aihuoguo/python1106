@@ -60,3 +60,8 @@ class GoodsSKUAdmin(admin.ModelAdmin):
 @admin.register(Carousel)
 class CarouselAdmin(admin.ModelAdmin):
     list_display = ['id','name','img_url','order','goods_sku']
+
+# 商品相册表
+@admin.register(GoodsPhoto)
+class GoodsPhotoAdmin(admin.ModelAdmin):
+    list_display = ['id','img_url','goods_sku']

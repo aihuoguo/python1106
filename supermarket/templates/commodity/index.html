@@ -14,7 +14,7 @@
         </div>
         <h1 class="am-header-title1">
             <div class="search-box">
-                <a href="village.html" class="index-search">荣耀10C手机</a>
+                <a href="village.html" class="index-search">大型超市</a>
                 <!--  <input type="submit" value="" class="search-icon" /> -->
             </div>
         </h1>
@@ -82,7 +82,7 @@
         </li>
         <li>
             <div class="am-gallery-item">
-                <a href="category.html" class="">
+                <a href="{% url '商品首页:商品类型' %}" class="">
                     <img src="{% static 'images/icon5.png' %}"/>
                     <p>超市</p>
                 </a>
@@ -140,7 +140,7 @@
             <div class="popup-close"><i class="iconfont">&#xe602</i></div>
         </div>
         <div class="dq-text">
-            <img src="images/qiandao.png" width="40"/>&nbsp; 您已连续签到3天
+            <img src="{% static 'images/qiandao.png' %}" width="40"/>&nbsp; 您已连续签到100天
         </div>
     </div>
     <!--签到-->
@@ -199,7 +199,7 @@
                 if (result && result.city && result.bounds) {
                     var cityinfo = result.city;
                     var citybounds = result.bounds;
-                    document.getElementById('info').innerHTML = '您当前所在城市：'+cityinfo;
+                    document.getElementById('info').innerHTML = cityinfo;
                     //地图显示当前城市
                     map.setBounds(citybounds);
                 }
