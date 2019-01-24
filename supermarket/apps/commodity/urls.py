@@ -1,9 +1,9 @@
 from django.conf.urls import url
 
-from commodity.views import index, category, detail
+from commodity.views import DetailView, TypeView, IndexView
 
 urlpatterns = [
-    url(r'^index/$',index,name='index'), # 首页
-    url(r'^detail/$',detail,name='detail'), # 商品详情
-    url(r'^category/$',category,name='category'), # 超市商品列表
+    url(r'^index/$', IndexView.as_view(), name='index'),
+    url(r'^type/$', TypeView.as_view(), name='商品类型'),
+    url(r'^detail/(?P<id>\d+)/$', DetailView.as_view(), name='商品详情'),
 ]

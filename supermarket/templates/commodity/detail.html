@@ -1,7 +1,23 @@
 {% extends 'common/parent.html' %}
 {% load static %}
+
 {% block title %}
-超市
+{{ goods_sku.goods_spu.spu_name }}{{ goods_sku.sku_name }}
+{% endblock %}
+
+
+{% block head_css %}
+		<script>
+        	function changeImage(){
+              document.getElementById("imgflag").src="images/redherat.png";
+           }
+        </script>
+
+		<style>
+			.am-slider-default .am-control-nav{ text-align: center;}
+			.am-slider-default .am-control-nav li a.am-active{ background: #cb2527;}
+			.am-slider-default .am-control-nav li a{ border: 0; width: 10px; height: 10px;}
+		</style>
 {% endblock %}
 
 {% block header %}
@@ -17,19 +33,21 @@
 	    </header>
 	    <div style="height: 49px;"></div>
 {% endblock %}
-
-
-{% block content %}
-	    <!--图片轮换-->
+	{% block content %}
+    <!--图片轮换-->
 		<div class="am-slider am-slider-default" data-am-flexslider id="demo-slider-0">
 		  <ul class="am-slides">
-		    <li><img src="{% static 'images/pic.png' %}" /></li>
-		    <li><img src="{% static 'images/pic.png' %}" /></li>
+              {% for goodsphoto in goods_sku.goodsphoto_set.all %}
+              <li><img src="{{ MEDIA_URL }}{{ goodsphoto.img_url }}" /></li>
+              {% endfor %}
+              
+
+
 		  </ul>
 		</div>
 		<div class="detal-info" style="position: relative; width: 100%;">
-			<p>特价武夷山桐木关正山小种红茶高档礼盒</p>
-			<h2>商城价：<span>￥52.00</span></h2>
+			<p>{{ goods_sku.goods_spu.spu_name }}{{ goods_sku.sku_name }}</p>
+			<h2>商城价：<span>￥{{ goods_sku.price }}</span></h2>
 			<div class="heart">
 				<img src="{% static 'images/herat.png' %}" width="25" id="imgflag" onclick="changeImage()" />
 				<p>收藏</p>
@@ -54,10 +72,7 @@
 
 		  <div class="am-tabs-bd">
 		    <div class="am-tab-panel am-fade am-in am-active detail " id="tab1" >
-		            <p>产地: 中国大陆</p>
-                    <p>功效: 瘦身,美容,提神,抗氧化,保健,降三高</p>
-                    <p>保质期: >2年</p>
-                    <img src="{% static 'images/test11.png' %}" />
+		           {{ goods_sku.goods_spu.spu_detail }}
 		    </div>
 		    <div class="am-tab-panel am-fade detail " id="tab2">
 		         <!--<div class="comment">
@@ -106,17 +121,19 @@
 		    </div>
 		  </div>
 		</div>
-{% endblock %}
 
+	{% endblock %}
 		
 {% block footer %}
-	<!--底部-->
+		<!--底部-->
  <div style=" height: 55px;"></div>
  <ul class="fix-shopping">
  	<li><a href="shopcart.html" class="join">加入购物车</a></li>
  	<li><a href="tureorder.html" class="imm-buy">立即购买</a></li>
  </ul>
-
+{% endblock %}
+ 
+{% block footer_js %}
  <script>
 	//购物数量加减
 	$(function(){
@@ -138,10 +155,11 @@
 		})
 	})
 </script>
-
-
-
 {% endblock %}
-
  
+ 
+ 
+ 
+
+
 

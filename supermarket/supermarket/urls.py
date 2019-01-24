@@ -18,6 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^ckeditor/', include("ckeditor_uploader.urls")),
     url(r'^order/', include('order.urls', namespace='订单')),
     url(r'^users/', include('users.urls', namespace='用户')),
     url(r'^shopping_cat/', include('shopping_cart.urls', namespace='购物车')),

@@ -54,3 +54,9 @@ class GoodsSKUAdmin(admin.ModelAdmin):
     inlines = [
         GoodsPhotoInline,
     ]
+
+
+#商品图片轮播表
+@admin.register(Carousel)
+class CarouselAdmin(admin.ModelAdmin):
+    list_display = ['id','name','img_url','order','goods_sku']

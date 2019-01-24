@@ -1,246 +1,213 @@
 {% extends 'common/parent.html' %}
 {% load static %}
 {% block title %}
-首页
+    超市
 {% endblock %}
 
 {% block header %}
-<header data-am-widget="header" class="am-header am-header-default sq-head1">
-			<div class="am-header-left am-header-nav">
-		        <a href="city.html" class="" style="color: #fff;">
-			        <img src="{% static 'images/city.png' %}" />
-			        <p style="font-size: 12px; margin-top: -35px;">南昌</p>
-			    </a>
-		   </div>
-			<h1 class="am-header-title1">
-		        <div class="search-box">
-		           <a href="village.html" class="index-search">南昌大学前湖校区∨</a>
-		         <!--  <input type="submit" value="" class="search-icon" /> -->
-		        </div>
-		    </h1>
-			<div class="am-header-right am-header-nav">
-			    <a href="tidings.html" class="">
-		         <div class="messgae"><span>10</span></div>
-		        </a>
-			</div>
-        </header>
-<div style="height: 49px;"></div>
+    <header data-am-widget="header" class="am-header am-header-default sq-head1">
+        <div class="am-header-left am-header-nav">
+            <a href="city.html" class="" style="color: #fff;">
+                <img src="{% static 'images/city.png' %}"/>
+                <p style="font-size: 12px; margin-top: -35px;" id="info">全国</p>
+            </a>
+        </div>
+        <h1 class="am-header-title1">
+            <div class="search-box">
+                <a href="village.html" class="index-search">荣耀10C手机</a>
+                <!--  <input type="submit" value="" class="search-icon" /> -->
+            </div>
+        </h1>
+        <div class="am-header-right am-header-nav">
+            <a href="tidings.html" class="">
+                <div class="messgae"><span>10</span></div>
+            </a>
+        </div>
+    </header>
+    <div style="height: 49px;"></div>
 {% endblock %}
 
-{% block content %}
-<!--图片轮换-->
-<div class="am-slider am-slider-default" data-am-flexslider id="demo-slider-0">
-  <ul class="am-slides">
-    <li><img src="{% static 'images/banner.png' %}" /></li>
-    <li><img src="{% static 'images/banner.png' %}" /></li>
-  </ul>
-</div>
-<!--导航-->
- <ul class="sq-nav">
-      <li>
-        <div class="am-gallery-item">
-            <a href="recharge.html" class="">
-              <img src="{% static 'images/icon.png' %}" />
-              <p>充值</p>
-            </a>
-        </div>
-      </li>
-      <li>
-        <div class="am-gallery-item">
-            <a href="javascript:;" class="index-qd">
-              <img src="{% static 'images/icon1.png' %}" />
-              <p>签到</p>
-            </a>
-        </div>
-      </li>
-      <li>
-        <div class="am-gallery-item">
-            <a href="yhq.html" class="">
-              <img src="{% static 'images/icon1.png' %}" />
-              <p>红包</p>
-            </a>
-        </div>
-      </li>
-      <li>
-        <div class="am-gallery-item">
-            <a href="" class="">
-              <img src="{% static 'images/icon3.png' %}" />
-              <p>即将上线</p>
-            </a>
-        </div>
-      </li>
-  </ul>
-  <ul class="sq-nav1">
-  	<li>
-        <div class="am-gallery-item">
-            <a href="speed.html" class="">
-              <img src="{% static 'images/icon3.png' %}" />
-              <p>零食飞速</p>
-            </a>
-        </div>
-      </li>
-      <li>
-        <div class="am-gallery-item">
-            <a href="{% url '商品首页:category' %}" class="">
-              <img src="{% static 'images/icon5.png' %}" />
-              <p>超市</p>
-            </a>
-        </div>
-      </li>
 
-  </ul>
-  <div class="h-line"></div>
-  <!--不规则展示-->
-  <div class="index-product">
-  	<div class="index-pro-lf"><a href=""><img src="{% static 'images/s1.png' %}"/></a></div>
-  	<div class="index-pro-lr"><a href=""><img src="{% static 'images/s2.png' %}"/></a></div>
-  </div>
-  <div class="product-bot">
-  	<div class="product-bot-lf"><a href=""><img src="{% static 'images/s3.png' %}"/></a></div>
-  	<div class="product-bot-lr">
-  		<div class="top"><a href=""><img src="{% static 'images/s4.png' %}"/></a></div>
-  		<div class="bot">
-  			<div class="bot-lf"><a href=""><img src="{% static 'images/s5.png' %}"/></a></div>
-  			<div class="bot-lr"><a href=""><img src="{% static 'images/s6.png' %}"/></a></div>
-  		</div>
-  	</div>
-  </div>
-  <!--不规则展示-->
-  <div class="h-line"></div>
-  <!-- 特色专区-->
-  <div class="sq-title">
- 	<img src="{% static 'images/ts.png' %}" width="26"/>
- 	特色专区
-  </div>
-  <ul data-am-widget="gallery" class="am-gallery pro-list am-avg-sm-2 am-avg-md-2 am-avg-lg-4 am-gallery-default"  >
-      <li>
-        <div class="am-gallery-item">
-            <a href="{% url '商品首页:detail' %}" class="">
-              <img src="{% static 'images/test.png' %}" />
-                <h3 class="am-gallery-title">猪骨头棒新鲜生鲜肉制品猪大骨头筒骨熬汤佳品500g</h3>
-                <div class="am-gallery-desc">￥52</div>
-            </a>
-        </div>
-      </li>
-      <li>
-        <div class="am-gallery-item">
-            <a href="{% url '商品首页:detail' %}" class="">
-              <img src=" {% static 'images/test1.png' %}" />
-                <h3 class="am-gallery-title">冻品批发大江鸡腿 冷鲜鸡腿放心食材1kg 冷冻食材</h3>
-                <div class="am-gallery-desc">￥39</div>
-            </a>
-        </div>
-      </li>
+
+{% block content %}
+    <!--图片轮换-->
+    <div class="am-slider am-slider-default" data-am-flexslider id="demo-slider-0">
+        <ul class="am-slides">
+            <li><img src="{% static 'images/banner.png' %}"/></li>
+        </ul>
+    </div>
+    <!--导航-->
+    <ul class="sq-nav">
         <li>
-        <div class="am-gallery-item">
-            <a href="{% url '商品首页:detail' %}" class="">
-              <img src="{% static 'images/test2.png' %}" />
-                <h3 class="am-gallery-title">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</h3>
-                <div class="am-gallery-desc">￥45.8</div>
-            </a>
-        </div>
-      </li>
-      <li>
-        <div class="am-gallery-item">
-            <a href="{% url '商品首页:detail' %}" class="">
-              <img src=" {% static 'images/test21.png' %}" />
-                <h3 class="am-gallery-title">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</h3>
-                <div class="am-gallery-desc">￥45.8</div>
-            </a>
-        </div>
-      </li>
-       <li>
-        <div class="am-gallery-item">
-            <a href="{% url '商品首页:detail' %}" class="">
-              <img src=" {% static 'images/test.png' %}" />
-                <h3 class="am-gallery-title">猪骨头棒新鲜生鲜肉制品猪大骨头筒骨熬汤佳品500g</h3>
-                <div class="am-gallery-desc">￥52</div>
-            </a>
-        </div>
-      </li>
-      <li>
-        <div class="am-gallery-item">
-            <a href="detail.html" class="">
-              <img src=" {% static 'images/test1.png' %}" />
-                <h3 class="am-gallery-title">冻品批发大江鸡腿 冷鲜鸡腿放心食材1kg 冷冻食材</h3>
-                <div class="am-gallery-desc">￥39</div>
-            </a>
-        </div>
-      </li>
+            <div class="am-gallery-item">
+                <a href="recharge.html" class="">
+                    <img src="{% static 'images/icon.png' %}"/>
+                    <p>充值</p>
+                </a>
+            </div>
+        </li>
         <li>
-        <div class="am-gallery-item">
-            <a href="detail.html" class="">
-              <img src=" {% static 'images/test1.png' %}" />
-                <h3 class="am-gallery-title">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</h3>
-                <div class="am-gallery-desc">￥45.8</div>
-            </a>
+            <div class="am-gallery-item">
+                <a href="javascript:;" class="index-qd">
+                    <img src="{% static 'images/icon1.png' %}"/>
+                    <p>签到</p>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div class="am-gallery-item">
+                <a href="yhq.html" class="">
+                    <img src="{% static 'images/icon2.png' %}"/>
+                    <p>红包</p>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div class="am-gallery-item">
+                <a href="" class="">
+                    <img src="{% static 'images/icon3.png' %}"/>
+                    <p>即将上线</p>
+                </a>
+            </div>
+        </li>
+    </ul>
+    <ul class="sq-nav1">
+        <li>
+            <div class="am-gallery-item">
+                <a href="speed.html" class="">
+                    <img src="{% static 'images/icon4.png' %}"/>
+                    <p>零食飞速</p>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div class="am-gallery-item">
+                <a href="category.html" class="">
+                    <img src="{% static 'images/icon5.png' %}"/>
+                    <p>超市</p>
+                </a>
+            </div>
+        </li>
+
+    </ul>
+    <div class="h-line"></div>
+    <!--不规则展示-->
+    <div class="index-product">
+        <div class="index-pro-lf"><a href=""><img src="{% static 'images/s1.png' %}"/></a></div>
+        <div class="index-pro-lr"><a href=""><img src="{% static 'images/s2.png' %}"/></a></div>
+    </div>
+    <div class="product-bot">
+        <div class="product-bot-lf"><a href=""><img src="{% static 'images/s3.png' %}"/></a></div>
+        <div class="product-bot-lr">
+            <div class="top"><a href=""><img src="{% static 'images/s4.png' %}"/></a></div>
+            <div class="bot">
+                <div class="bot-lf"><a href=""><img src="{% static 'images/s5.png' %}"/></a></div>
+                <div class="bot-lr"><a href=""><img src="{% static 'images/s6.png' %}"/></a></div>
+            </div>
         </div>
-      </li>
-      <li>
-        <div class="am-gallery-item">
-            <a href="detail.html" class="">
-              <img src=" {% static 'images/test1.png' %}" />
-                <h3 class="am-gallery-title">法国加力果12个装 进口新鲜水果 嘎啦苹果 包邮</h3>
-                <div class="am-gallery-desc">￥45.8</div>
-            </a>
+    </div>
+    <!--不规则展示-->
+    <div class="h-line"></div>
+    <!-- 特色专区-->
+    <div class="sq-title">
+        <img src="{% static 'images/ts.png' %}" width="26"/>
+        特色专区
+    </div>
+    <ul data-am-widget="gallery" class="am-gallery pro-list am-avg-sm-2 am-avg-md-2 am-avg-lg-4 am-gallery-default">
+        <li>
+            <div class="am-gallery-item">
+                <a href="detail.html" class="">
+                    <img src="{% static 'images/test.png' %}"/>
+                    <h3 class="am-gallery-title">猪骨头棒新鲜生鲜肉制品猪大骨头筒骨熬汤佳品500g</h3>
+                    <div class="am-gallery-desc">￥52</div>
+                </a>
+            </div>
+        </li>
+        <li>
+            <div class="am-gallery-item">
+                <a href="detail.html" class="">
+                    <img src="{% static 'images/test1.png' %}"/>
+                    <h3 class="am-gallery-title">冻品批发大江鸡腿 冷鲜鸡腿放心食材1kg 冷冻食材</h3>
+                    <div class="am-gallery-desc">￥39</div>
+                </a>
+            </div>
+        </li>
+    </ul>
+    <!--签到-->
+    <div class="qd-box">
+        <div class="popup-title">
+            <span>签到成功</span>
+            <div class="popup-close"><i class="iconfont">&#xe602</i></div>
         </div>
-      </li>
-  </ul>
-<!--签到-->
-<div class="qd-box">
-	<div class="popup-title">
-			<span>签到成功</span>
-			<div class="popup-close"><i class="iconfont">&#xe602</i></div>
-	</div>
-	<div class="dq-text">
-		<img src="{% static 'images/qiandao.png' %}" width="40" />&nbsp; 您已连续签到3天
-	</div>
-</div>
-<!--签到-->
+        <div class="dq-text">
+            <img src="images/qiandao.png" width="40"/>&nbsp; 您已连续签到3天
+        </div>
+    </div>
+    <!--签到-->
 {% endblock %}
 
 
 {% block footer %}
- <!--底部-->
- <div style="height: 55px;"></div>
- <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default sq-foot am-no-layout" id="">
-      <ul class="am-navbar-nav am-cf am-avg-sm-5">
-          <li>
-            <a href="index.html" class="curr">
-                <span class="am-icon-home"></span>
-                <span class="am-navbar-label">首页</span>
-            </a>
-          </li>
-          <li>
-            <a href="message.html" class="">
-                <span class="am-icon-comments"></span>
-                <span class="am-navbar-label">动态</span>
-            </a>
-          </li>
-          <li>
-            <a href="shopcart.html" class="">
-                <span class="am-icon-shopping-cart"></span>
-                <span class="am-navbar-label">购物车</span>
-            </a>
-          </li>
-          <li>
-            <a href="allorder.html" class="">
-                <span class="am-icon-file-text"></span>
-                <span class="am-navbar-label">订单</span>
-            </a>
-          </li>
+    <!--底部-->
+    <div style="height: 55px;"></div>
+    <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default sq-foot am-no-layout" id="">
+        <ul class="am-navbar-nav am-cf am-avg-sm-5">
+            <li>
+                <a href="index.html" class="curr">
+                    <span class="am-icon-home"></span>
+                    <span class="am-navbar-label">首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="message.html" class="">
+                    <span class="am-icon-comments"></span>
+                    <span class="am-navbar-label">动态</span>
+                </a>
+            </li>
+            <li>
+                <a href="shopcart.html" class="">
+                    <span class="am-icon-shopping-cart"></span>
+                    <span class="am-navbar-label">购物车</span>
+                </a>
+            </li>
+            <li>
+                <a href="allorder.html" class="">
+                    <span class="am-icon-file-text"></span>
+                    <span class="am-navbar-label">订单</span>
+                </a>
+            </li>
 
-          <li>
-            <a href="member.html" class="">
-                <span class="am-icon-user"></span>
-                <span class="am-navbar-label">我的</span>
-            </a>
-          </li>
-      </ul>
-</div>
+            <li>
+                <a href="member.html" class="">
+                    <span class="am-icon-user"></span>
+                    <span class="am-navbar-label">我的</span>
+                </a>
+            </li>
+        </ul>
+    </div>
 {% endblock %}
-
- 
- 
- 
- 
+{% block footer_js %}
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.12&key=442db484cdb6c86257204e51222c5a5d&plugin=AMap.CitySearch"></script>
+<script type="text/javascript">
+    //获取用户所在城市信息
+    function showCityInfo() {
+        //实例化城市查询类
+        var citysearch = new AMap.CitySearch();
+        //自动获取用户IP，返回当前城市
+        citysearch.getLocalCity(function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+                if (result && result.city && result.bounds) {
+                    var cityinfo = result.city;
+                    var citybounds = result.bounds;
+                    document.getElementById('info').innerHTML = '您当前所在城市：'+cityinfo;
+                    //地图显示当前城市
+                    map.setBounds(citybounds);
+                }
+            } else {
+                document.getElementById('info').innerHTML = result.info;
+            }
+        });
+    }
+    showCityInfo();
+</script>
+{% endblock %}
