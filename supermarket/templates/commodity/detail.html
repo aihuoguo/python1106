@@ -37,7 +37,7 @@
     <!--图片轮换-->
 		<div class="am-slider am-slider-default" data-am-flexslider id="demo-slider-0">
 		  <ul class="am-slides">
-              {% for goodsphoto in goods_sku.goodsphoto_set.all %}
+                  {% for goodsphoto in goods_sku.goodsphoto_set.all %}
               <li><img src="{{ MEDIA_URL }}{{ goodsphoto.img_url }}" /></li>
               {% endfor %}
               
