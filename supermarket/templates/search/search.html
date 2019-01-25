@@ -1,100 +1,83 @@
+{% extends 'common/parent.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>超市</title>
-        <meta name="description" content="">
-        <meta name="keywords" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <meta name="renderer" content="webkit">
-        <meta http-equiv="Cache-Control" content="no-siteapp" />
-        <link rel="icon" type="image/png" href="/theme/default/images/favicon.png">
-		<link href="{% static "css/amazeui.min.css" %}" rel="stylesheet" type="text/css" />
-		<link href="{% static "css/style.css" %}" rel="stylesheet" type="text/css" />
-		<script src="{% static "js/jquery-1.10.2.min.js" %}"></script>
-		<script src="{% static "js/time.js" %}"></script>
-		<style>
-			.shop-list-mid .tit a{color: #909090;
-    font-size: 1.4rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    white-space: normal;
-    text-overflow: ellipsis;}
 
-            .list-price {
-    background: url({% if order == 2 %}{% static "images/order-bot.png" %}{% elif order == 3 %}{% static "images/order-top.png" %}{% else %}{% static "images/order.png" %}{% endif %}) no-repeat right center;
-    padding-right: 20px;
-    font-style: normal;
-}
-		</style>
-	</head>
-	<body>
-		<header data-am-widget="header" class="am-header am-header-default sq-head ">
-			<div class="am-header-left am-header-nav">
-				<a href="javascript:history.back()" class="">
-					<i class="am-icon-chevron-left"></i>
-				</a>
-			</div>
-            <form action="{% url "search:haystack_search" %}" method="get">
-                <div class="cate-search">
-		    	<input type="text" name="q" value="{{ query }}" class="cate-input" placeholder="{{ query|default:"请输入产品关键词" }}" />
-		    	<input type="submit" value="" class="cate-btn" />
-	            </div>
+{% block title %}
+    超市
+{% endblock %}
+{% block head_css %}
+    <style>
+        .shop-list-mid .tit a {
+            color: #909090;
+            font-size: 1.4rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            white-space: normal;
+            text-overflow: ellipsis;
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block header %}
+    <header data-am-widget="header" class="am-header am-header-default sq-head ">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:history.back()" class="">
+                <i class="am-icon-chevron-left"></i>
+            </a>
+        </div>
+        <form action="{% url 'search:haystack_search' %}" method="get">
+        <div class="cate-search">
+            <input type="text" name="q" class="cate-input" placeholder="{{ query|default:'请输入你要查询内容的关键字' }}"/>
+            <input type="submit" value="" class="cate-btn"/>
+        </div>
             </form>
+    </header>
+{% endblock %}
+{% block content %}
 
-	    </header>
+    <div class="content-list">
 
-	    <ul class="list-nav">
-	    	<li {% if order == 0 %}class="current"{% endif %}><a href="{% url "商品首页:商品类型" cate_id 0 %}">综合</a></li>
-	    	<li {% if order == 1 %}class="current"{% endif %}><a href="{% url "商品首页:商品类型" cate_id 1 %}">销量</a></li>
-            <li {% if order == 2 or order == 3 %}class="current"{% endif %}><a id="price" href="{% url "商品首页:商品类型" cate_id 2 %}"><i  class="list-price">价格</i></a></li>
-	    	<li {% if order == 4 %}class="current"{% endif %}><a href="{% url "商品商品首页:商品类型" cate_id 4 %}">新品</a></li>
-	    </ul>
-	    <div>
-
-	    	<div class="list-right">
-	    		<ul class="list-pro">
-                    {% for search in page %}
+        <div class="">
+            <ul class="list-pro">
+                {% for search in page %}
                     <li>
-	    		<a href="{% url "商品首页:商品详情" search.object.pk %}"><img src="{{ MEDIA_URL }}{{ search.object.logo }}" class="list-pic" /></a>
-	    		<div class="shop-list-mid" style="width: 65%;">
-                	<div class="tit"><a href="{% url "商品首页:商品详情" search.object.pk %}">{{ search.object.sku_name }}</a></div>
-                	<div class="am-gallery-desc">￥{{ search.object.price }}</div>
-                	<p>销量：{{ search.object.sales_volume }}</p>
-                </div>
-                <div class="list-cart">
-                <div class="d-stock ">
-		                <a class="decrease">-</a>
-		                <input id="num" readonly="" class="text_box" name="" type="text" value="0">
-		                <a class="increase">+</a>
-                </div>
-                </div>
-                <!--<a href="" class="list-cart"><img src="images/cart.png" width="30"/></a>-->
-	    	</li>
-                        {% empty %}
-                        <li>
-                        <a href="{% url "商品首页:商品类型" "" "" %}">商品丢失了</a>
-                        </li>
-                    {% endfor %}
+                        <a href="{% url '商品首页:商品详情' search.object.pk %}"><img src="{{ MEDIA_URL }}{{ search.object.logo }}"
+                                                                          class="list-pic"/></a>
+                        <div class="shop-list-mid" style="width: 65%;">
+                            <div class="tit"><a href="{% url '商品首页:商品详情' search.object.pk %}">
+                                {{ search.object.goods_spu.spu_name }}{{ search.object.sku_name }}</a></div>
+                            <div class="am-gallery-desc">￥{{ search.object.price }}</div>
+                            <p>销量：{{ search.object.sales_val }}件</p>
+                        </div>
+                        <div class="list-cart">
+                            <div class="d-stock ">
+                                <a class="decrease">-</a>
+                                <input id="num" readonly="" class="text_box" name="" type="text" value="0">
+                                <a class="increase">+</a>
+                            </div>
+                        </div>
+                        <!--<a href="" class="list-cart"><img src="images/cart.png" width="30"/></a>-->
+                    </li>
+                {% empty %}
+                    <li>
+                        <a href="{% url '商品首页:商品类型' '' '' %}">该分类下商品不见了！！</a>
+                    </li>
+                {% endfor %}
+
+
+            </ul>
+        </div>
+    </div>
+{% endblock %}
 
 
 
-	    </ul>
-	    	</div>
-	    </div>
 
 
 
 
 
 
-
-<script src="{% static "js/jquery.min.js" %}"></script>
-<script src="{% static "js/amazeui.min.js" %}"></script>
-
-	</body>
-</html>

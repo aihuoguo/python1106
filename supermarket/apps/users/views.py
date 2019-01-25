@@ -105,7 +105,6 @@ class InfoView(VerifyLoginView):
         user.save()
         #同时修改session
         login(request,user)
-
         # 合成响应
         return redirect('用户:member')
 

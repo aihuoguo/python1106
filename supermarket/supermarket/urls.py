@@ -16,6 +16,8 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from commodity.views import IndexView
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^ckeditor/', include("ckeditor_uploader.urls")),
@@ -23,4 +25,7 @@ urlpatterns = [
     url(r'^users/', include('users.urls', namespace='用户')),
     url(r'^shopping_cat/', include('shopping_cart.urls', namespace='购物车')),
     url(r'^commodity/', include('commodity.urls', namespace='商品首页')),
+    url(r'^$',IndexView.as_view()),
+    # 全文搜索框架
+    url(r'^search/', include('haystack.urls',namespace='search')),
 ]

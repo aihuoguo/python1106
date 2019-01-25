@@ -18,7 +18,7 @@ from commodity.models import GoodsType, GoodsSPU, Unit, GoodsSKU, GoodsPhoto, Ca
 # admin.site.register(GoodsPhoto)
 # admin.site.register(Carousel)
 # admin.site.register(Activity)
-# admin.site.register(Activity_Area)
+admin.site.register(Activity_Area)
 
 
 # 商品类型表
@@ -65,3 +65,14 @@ class CarouselAdmin(admin.ModelAdmin):
 @admin.register(GoodsPhoto)
 class GoodsPhotoAdmin(admin.ModelAdmin):
     list_display = ['id','img_url','goods_sku']
+
+
+#首页活动表
+@admin.register(Activity)
+class ActivityAdmin(admin.ModelAdmin):
+    list_display = ['id','act_name','img_url','url_address']
+
+# #活动专区表
+# @admin.register(Activity_Area)
+# class Activity_AreaAdmin(admin.ModelAdmin):
+#     list_display = ['id','name','describe','is_on_sale','goods_sku']
