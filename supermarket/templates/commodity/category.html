@@ -34,7 +34,8 @@
         </div>
         <div class="cate-search">
 
-            <a href="{% url 'search:haystack_search' %}"> <input type="text"  class="cate-input" placeholder="请输入您要的搜索的产品关键词"/></a>
+            <a href="{% url 'search:haystack_search' %}"> <input type="text" class="cate-input"
+                                                                 placeholder="请输入您要的搜索的产品关键词"/></a>
             <input type="button" class="cate-btn"/>
         </div>
     </header>
@@ -51,12 +52,12 @@
     </ul>
     <div class="content-list">
         <div class="list-left">
-{##}
-{#            {% for category in categorys %}#}
-{#                <li  {% if cate_id == category.pk %} class="current">{% endif %}#}
-{#                    <a href="{% url '商品首页:商品类型' category.pk order %}">{{ category.type_name }}</a>#}
-{#                </li>#}
-{#            {% endfor %}#}
+            {##}
+            {#            {% for category in categorys %}#}
+            {#                <li  {% if cate_id == category.pk %} class="current">{% endif %}#}
+            {#                    <a href="{% url '商品首页:商品类型' category.pk order %}">{{ category.type_name }}</a>#}
+            {#                </li>#}
+            {#            {% endfor %}#}
             {% for category in categorys %}
                 <li {% if cate_id == category.pk %}class="current"{% endif %}>
                     <a href="{% url '商品首页:商品类型' category.pk order %}">{{ category.type_name }}</a>
@@ -79,7 +80,8 @@
                         <div class="list-cart">
                             <div class="d-stock ">
                                 <a class="decrease">-</a>
-                                <input id="num" readonly="" class="text_box" name="" type="text" value="0">
+                                <input sku_id="{{ goods_sku.pk }}" id="num" readonly="" class="text_box" name=""
+                                       type="text" value="0">
                                 <a class="increase">+</a>
                             </div>
                         </div>
@@ -101,7 +103,7 @@
     <!--底部-->
     <div style="height: 55px;"></div>
     <div class="fix-bot">
-        <div class="fix-bot-cart"><i>8</i></div>
+        <div class="fix-bot-cart"><i id="cart_count">{{ cart_count }}</i></div>
         <a href="tureorder.html" class="list-js">去结算</a>
         <a href="tureorder.html" class="list-jsk">一键快购</a>
         <!--<div class="js-text">
@@ -118,41 +120,129 @@
 
 {% block footer_js %}
     <script>
+
         //购物数量加减
         $(function () {
             $('.increase').click(function () {
                 var self = $(this);
                 var current_num = parseInt(self.siblings('input').val());
-                current_num += 1;
-                if (current_num > 0) {
-                    self.siblings(".decrease").fadeIn();
-                    self.siblings(".text_box").fadeIn();
-                }
-                self.siblings('input').val(current_num);
-                update_item(self.siblings('input').data('item-id'));
-            })
-            $('.decrease').click(function () {
-                var self = $(this);
-                var current_num = parseInt(self.siblings('input').val());
-                if (current_num > 0) {
-                    current_num -= 1;
-                    if (current_num < 1) {
-                        self.fadeOut();
-                        self.siblings(".text_box").fadeOut();
-                    }
-                    self.siblings('input').val(current_num);
-                    update_item(self.siblings('input').data('item-id'));
-                }
-            })
-        })
 
+                //完成ajax请求
+                //准备数据
+                // sku_id 在input上自定义一个属性 sku_id = 1
+                //找到input获取自定义属性值
+                var sku_id = self.siblings('input').attr('sku_id');
+                var data = {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'count': 1,
+                    'sku_id': sku_id
+                };
+                $.ajax({
+                    type: 'post',
+                    url: '{% url '购物车:添加购物车' %}',
+                    data: data,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.code == 0) {
+                            //添加成功
+                            current_num += 1;
+                            if (current_num > 0) {
+                                self.siblings(".decrease").fadeIn();
+                                self.siblings(".text_box").fadeIn();
+                            }
+                            self.siblings('input').val(current_num);
+
+                            //修改总数量
+                            $('#cart_count').text(data.data);
+                        }else if (data.code == 1){
+                            //未登录，跳转到登录页面
+                            if (confirm("没有登录，是否立即登录")){
+                                location.href="{% url '用户:login' %}"
+
+                            }
+                    }else {
+                            alert(data.errmsg)
+                        }
+                    }
+                })
+            });
+
+
+            $('.decrease').click(function(){
+			var self = $(this);
+			var current_num = parseInt(self.siblings('input').val());
+			{#Ajax操作开始#}
+            var sku_id = self.siblings('input').attr('sku_id');
+            var data = {
+                'csrfmiddlewaretoken':'{{ csrf_token }}',
+                'count':-1,
+                'sku_id':sku_id
+
+            };
+            $.ajax({
+                type:"post",
+                url:"{% url '购物车:减少购物车' %}",
+                data:data,
+                dataType:"json",
+                success:function (data) {
+                  if (data.code == 0){
+                      //删除成功
+                      if(current_num > 0){
+				current_num -= 1;
+                if(current_num < 1){
+	                self.fadeOut();
+					self.siblings(".text_box").fadeOut();
+                }
+				self.siblings('input').val(current_num);
+                // 修改数量
+                          $("#cart_count").text(data.data);
+			}else if (data.code == 1){
+                          //未登录，跳转登录
+                          if(confirm("没有登录，是否立即登录")){
+                            location.href = "{% url '用户:login' %}"
+                          }
+
+                      }else {
+                          alert(data.errmsg);
+                      }
+                  }
+                }
+
+            });
+
+
+			{% comment %}if(current_num > 0){
+				current_num -= 1;
+                if(current_num < 1){
+	                self.fadeOut();
+					self.siblings(".text_box").fadeOut();
+                }
+				self.siblings('input').val(current_num);
+
+			}{% endcomment %}
+		})
+
+
+                {#if (current_num > 0) {#}
+                {#    current_num -= 1;#}
+                {#    if (current_num < 1) {#}
+                {#        self.fadeOut();#}
+                {#        self.siblings(".text_box").fadeOut();#}
+                {#    }#}
+                {#    self.siblings('input').val(current_num);#}
+                {##}
+
+
+
+
+        });
 
         $(function () {
             // 修改 标签上的地址值
             {% if order == 2 %}
-                $("#price").attr('href','{% url "商品首页:商品类型" cate_id 3 %}');
+                $("#price").attr('href', '{% url "商品首页:商品类型" cate_id 3 %}');
             {% elif order == 3 %}
-                $("#price").attr('href','{% url "商品首页:商品类型" cate_id 2 %}');
+                $("#price").attr('href', '{% url "商品首页:商品类型" cate_id 2 %}');
             {% endif %}
         })
     </script>

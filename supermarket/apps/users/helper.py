@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import redirect
 import sys
 from aliyunsdkdysmsapi.request.v20170525 import SendSmsRequest
@@ -8,6 +9,7 @@ from aliyunsdkcore.profile import region_provider
 from aliyunsdkcore.http import method_type as MT
 from aliyunsdkcore.http import format_type as FT
 # 保存session
+from shopping_cart.helper import json_msg
 from supermarket.settings import ACCESS_KEY_ID, ACCESS_KEY_SECRET
 
 
@@ -25,8 +27,16 @@ def check_login(func):
     def verify_login(request, *args, **kwargs):
         # 判断是否又session
         if request.session.get('ID') is None:
-            # 跳转到登录
-            return redirect('用户:login')
+            #保存上个请求地址
+            referer=request.META.get('HTTP_REFERER',None)
+            if referer:
+                request.session['referer']=referer
+            #判断是否为ajax请求
+            if request.is_ajax():
+                return JsonResponse(json_msg(1,'未登录'))
+            else:
+                # 跳转到登录
+                return redirect('用户:login')
         else:
             # 调用原函数
             return func(request, *args, **kwargs)

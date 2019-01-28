@@ -33,7 +33,10 @@
     <!--图片轮换-->
     <div class="am-slider am-slider-default" data-am-flexslider id="demo-slider-0">
         <ul class="am-slides">
-            <li><img src="{% static 'images/banner.png' %}"/></li>
+              {% for img in act %}
+                      <li><img src="{{ MEDIA_URL }}{{ img.img_url }}"/></li>
+                  {% endfor %}
+{#            <li><img src="{% static 'images/banner.png' %}"/></li>#}
         </ul>
     </div>
     <!--导航-->
@@ -110,29 +113,32 @@
     <div class="h-line"></div>
     <!-- 特色专区-->
     <div class="sq-title">
+    {% for v in data %}
         <img src="{% static 'images/ts.png' %}" width="26"/>
         特色专区
     </div>
     <ul data-am-widget="gallery" class="am-gallery pro-list am-avg-sm-2 am-avg-md-2 am-avg-lg-4 am-gallery-default">
         <li>
             <div class="am-gallery-item">
-                <a href="detail.html" class="">
-                    <img src="{% static 'images/test.png' %}"/>
-                    <h3 class="am-gallery-title">猪骨头棒新鲜生鲜肉制品猪大骨头筒骨熬汤佳品500g</h3>
-                    <div class="am-gallery-desc">￥52</div>
+                <a href="{% url '商品首页:商品详情' v.pk %}" class="">
+                    <img src="{{ MEDIA_URL }}{{ v.logo }}"/>
+                    <h3 class="am-gallery-title">{{ v.sku_name }}</h3>
+                    <div class="am-gallery-desc">￥{{ v.price }}</div>
                 </a>
             </div>
         </li>
-        <li>
-            <div class="am-gallery-item">
-                <a href="detail.html" class="">
-                    <img src="{% static 'images/test1.png' %}"/>
-                    <h3 class="am-gallery-title">冻品批发大江鸡腿 冷鲜鸡腿放心食材1kg 冷冻食材</h3>
-                    <div class="am-gallery-desc">￥39</div>
-                </a>
-            </div>
-        </li>
+{#        <li>#}
+{#            <div class="am-gallery-item">#}
+{#                <a href="detail.html" class="">#}
+{#                    <img src="{% static 'images/test1.png' %}"/>#}
+{#                    <h3 class="am-gallery-title">冻品批发大江鸡腿 冷鲜鸡腿放心食材1kg 冷冻食材</h3>#}
+{#                    <div class="am-gallery-desc">￥39</div>#}
+{#                </a>#}
+{#            </div>#}
+{#        </li>#}
     </ul>
+        {% endfor %}
+
     <!--签到-->
     <div class="qd-box">
         <div class="popup-title">
@@ -153,7 +159,7 @@
     <div data-am-widget="navbar" class="am-navbar am-cf am-navbar-default sq-foot am-no-layout" id="">
         <ul class="am-navbar-nav am-cf am-avg-sm-5">
             <li>
-                <a href="index.html" class="curr">
+                <a href="{% url '商品首页:index' %}" class="curr">
                     <span class="am-icon-home"></span>
                     <span class="am-navbar-label">首页</span>
                 </a>
@@ -165,7 +171,7 @@
                 </a>
             </li>
             <li>
-                <a href="shopcart.html" class="">
+                <a href="{% url '购物车:cart' %}" class="">
                     <span class="am-icon-shopping-cart"></span>
                     <span class="am-navbar-label">购物车</span>
                 </a>
@@ -178,7 +184,7 @@
             </li>
 
             <li>
-                <a href="member.html" class="">
+                <a href="{% url '用户:member' %}" class="">
                     <span class="am-icon-user"></span>
                     <span class="am-navbar-label">我的</span>
                 </a>

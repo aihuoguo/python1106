@@ -1,15 +1,24 @@
 from django.shortcuts import render
 from django.views import View
 
-from commodity.models import GoodsSKU, GoodsType
-
+from commodity.models import GoodsSKU, GoodsType, Activity
 
 # 商品首页
+from shopping_cart.helper import get_cart_count
+
+
 class IndexView(View):
     """商品首页"""
+    def get(self,request):
+        #查询数据库
+        act=Activity.objects.filter(is_delete=False)
+        data=GoodsSKU.objects.filter(is_delete=False)
+        context={
+            'act':act,
+            'data':data
+        }
+        return render(request,'commodity/index.html',context=context)
 
-    def get(self, request):
-        return render(request, 'commodity/index.html')
 
 
 # 商品分类表
@@ -39,10 +48,14 @@ class TypeView(View):
         # print(order_rule)
         goods_skus = goods_skus.order_by(order_rule[order])
 
+        #获取当前用户 购物车的总数量
+        cart_count=get_cart_count(request)
+
         context = {'categorys': categorys,
                    'goods_skus': goods_skus,
                    'cate_id': cate_id,
-                   'order': order}
+                   'order': order,
+                   'cart_count':cart_count}
 
         return render(request, 'commodity/category.html', context=context)
 
@@ -54,3 +67,10 @@ class DetailView(View):
         goods_sku = GoodsSKU.objects.get(pk=id)
         context = {'goods_sku': goods_sku, }
         return render(request, 'commodity/detail.html', context=context)
+
+# 首页活动轮播图
+
+
+
+
+

@@ -14,7 +14,7 @@ from django_redis import get_redis_connection
 from db.base_view import VerifyLoginView
 
 from users import set_password
-from users.forms import RegisterModelForm, LoginModelForm, InfoModelForm
+from users.forms import RegisterModelForm, LoginModelForm, InfoModelForm, ForgetPassword
 from users.helper import login, check_login, send_sms
 from users.models import Users
 
@@ -61,8 +61,14 @@ class LoginView(View):  # 登录
             # 保存登录标识到session中
             user = form.cleaned_data['user']
             login(request, user)
+
+            referer=request.session.get('referer')
+            if referer:
+                #调回去
+                return redirect(referer)
+            else:
             # 合成响应
-            return redirect('用户:member')
+                return redirect('用户:member')
         else:
             # 合成响应
             return render(request, 'users/login.html', {'form': form})
@@ -112,7 +118,30 @@ class InfoView(VerifyLoginView):
 
 
 def forget_pwd(request):
-    return render(request,'users/forgetpassword.html')
+    # 如果GET请求
+    if request.method == "GET":
+        return render(request, "users/forgetpassword.html")
+    # 如果是POST请求
+    if request.method == "POST":
+        # 获得表单提交的数据
+        data = request.POST
+        form = ForgetPassword(data)
+        # 如果正确
+        if form.is_valid():
+            # 获取手机号码
+            tel = form.cleaned_data.get("tel")
+            # 将更新的密码加密
+            pwd = set_password(form.cleaned_data.get("password"))
+            # 更新密码
+            Users.objects.filter(tel=tel).update(password=pwd)
+            # 跳转到登录页面
+            return redirect(reverse("user:login"))
+        else:
+            context = {
+                "errors": form.errors
+            }
+            # 渲染页面
+            return render(request, "users/forgetpassword.html", context=context)
 
 def safe(request):
     return render(request,'users/saftystep.html')

@@ -153,3 +153,27 @@ class InfoModelForm(forms.ModelForm):
 #         # 返回清洗的数据
 #         self.cleaned_data['user'] = user
 #         return self.cleaned_data
+
+class ForgetPassword(forms.ModelForm):# ------------------------------------------忘记密码表单验证
+    password = forms.CharField(max_length=20, min_length=6,
+                               error_messages={"min_length": "最小长度为6",
+                                               "max_length": "最大长度为20"})  # 单独验证 因为数据库没有repassword 无法在最下面一起验证
+    repassword = forms.CharField(max_length=20, min_length=6,
+                                 error_messages={"min_length": "最小长度为6", "max_length": "最大长度为20"})
+    def clean_tel(self):#清洗手机数据
+        tel=self.cleaned_data.get("tel")
+        flag=Users.objects.filter(tel=tel).exists()#如果存在
+        if flag:#存在
+            return tel
+        else:#不存在
+            raise forms.ValidationError("手机号码不存在")
+    def clean(self):#清洗所有数据
+        pwd=self.cleaned_data.get("password")#获得密码
+        repwd=self.cleaned_data.get("repassword")#获确认密码
+        if pwd and repwd and pwd != repwd:#验证是否不一致
+            raise forms.ValidationError({"repassword":"两次密码不一致"})
+        else:
+            return self.cleaned_data
+    class Meta:
+        model=Users
+        fields = ["tel"]#验证TEL的合法性
