@@ -181,7 +181,7 @@
             };
             $.ajax({
                 type:"post",
-                url:"{% url '购物车:减少购物车' %}",
+                url:"{% url '购物车:添加购物车' %}",
                 data:data,
                 dataType:"json",
                 success:function (data) {

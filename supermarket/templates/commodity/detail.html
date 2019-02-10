@@ -58,7 +58,7 @@
             <div class="d-stock">
               <a class="decrease">-</a>
                 <input id="num" readonly="" class="text_box" name="" type="text" value="1">
-                <input id="id" type="hidden" value="644">
+                <input id="count" sku_id="{{ goods_sku.pk }}" type="hidden" value="1">
                 <a class="increase">+</a>
                <span id="dprice" class="price" style="display:none"> 36</span>
             </div>
@@ -128,7 +128,8 @@
 		<!--底部-->
  <div style=" height: 55px;"></div>
  <ul class="fix-shopping">
- 	<li><a href="{% url '购物车:cart' %}" class="join">加入购物车</a></li>
+
+ 	<li><a href="javascript:;" class="join" id="join">加入购物车</a></li>
  	<li><a href="tureorder.html" class="imm-buy">立即购买</a></li>
  </ul>
 {% endblock %}
@@ -142,17 +143,53 @@
 			var current_num = parseInt(self.siblings('input').val());
 			current_num += 1;
 			self.siblings('input').val(current_num);
-			update_item(self.siblings('input').data('item-id'));
-		})
+
+		});
 		$('.decrease').click(function(){
 			var self = $(this);
 			var current_num = parseInt(self.siblings('input').val());
 			if(current_num > 1){
 				current_num -= 1;
 				self.siblings('input').val(current_num);
-				update_item(self.siblings('input').data('item-id'));
 			}
-		})
+		});
+
+        //添加数据到购物车
+        $(".join").on("click",function () {
+            {#console.debug(666);#}
+                //准备数据
+                // sku_id 在input上自定义一个属性 sku_id = 1
+                //找到input获取自定义属性值
+                var sku_id = $("#count").attr('sku_id');
+                var count=$("#count").val();
+                var data = {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                    'count': count,
+                    'sku_id': sku_id
+                };
+                $.ajax({
+                    type: 'post',
+                    url: '{% url '购物车:添加购物车' %}',
+                    data: data,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.code == 0) {
+                            //添加成功
+                            //跳转到购物车页面
+                            location.href='{% url '购物车:购物车列表' %}'
+                        }else if (data.code == 1){
+                            //未登录，跳转到登录页面
+                            if (confirm("没有登录，是否立即登录")){
+                                location.href="{% url '用户:login' %}"
+
+                            }
+                    }else {
+                            alert(data.errmsg)
+                        }
+                    }
+                })
+        })
+
 	})
 </script>
 {% endblock %}

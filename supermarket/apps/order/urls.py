@@ -1,11 +1,10 @@
 from django.conf.urls import url
 
-from order.views import allorder, order, orderdetail, pay
+from order.views import ConOrder, ShowOrder
 
 urlpatterns = [
-    url(r'^allorder/$',allorder,name='allorder'), # 全部订单
-    url(r'^order/$',order,name='order'), # 确认订单
-    url(r'^orderdetail/$',orderdetail,name='orderdetail'), # 订单详情
-    url(r'^pay/$',pay,name='pay'), # 支付页面
+    # url(r'^allorder/$',allorder,name='allorder'), # 全部订单
+    url(r'^conorder/$',ConOrder.as_view(),name='确认订单'), # 确认订单
+    url(r'^showorder/$',ShowOrder.as_view(),name='确认支付'),
 
 ]

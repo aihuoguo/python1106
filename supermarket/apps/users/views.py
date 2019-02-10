@@ -14,9 +14,9 @@ from django_redis import get_redis_connection
 from db.base_view import VerifyLoginView
 
 from users import set_password
-from users.forms import RegisterModelForm, LoginModelForm, InfoModelForm, ForgetPassword
+from users.forms import RegisterModelForm, LoginModelForm, InfoModelForm, ForgetPassword, AddressAddForm
 from users.helper import login, check_login, send_sms
-from users.models import Users
+from users.models import Users, UserAddress
 
 
 class RegisterView(View):  # 注册
@@ -197,3 +197,40 @@ class FsMsgView(View):
             return JsonResponse({'error':0})
 
 
+
+class Address(VerifyLoginView):
+    """收货地址添加"""
+    def get(self, request):
+        return render(request, 'users/address.html')
+
+    def post(self, request):
+        # 接收用户传入的数据，并且转换成字典
+        data = request.POST.dict()
+        # 从session中获取用户id，保存到字典中
+        data['user_id'] = request.session.get("ID")
+        # 验证参数
+        form = AddressAddForm(data)
+        #验证数据是否合法
+        if form.is_valid():
+            form.instance.user = Users.objects.get(pk=data['user_id'])
+            #保存到数据库
+            form.save()
+            return redirect('用户:addresslist')
+        else:
+            return render(request, 'users/address.html', {'form': form})
+
+
+class AddressList(VerifyLoginView):
+    """收货地址列表"""
+    # def get(self, request):
+    #     return render(request, 'users/gladdress.html')
+        # return HttpResponse('111')
+    def get(self, request):
+        # 获取用户的收货地址及用户id
+        user_id = request.session.get("ID")
+        user_addresses = UserAddress.objects.filter(user_id=user_id,is_delete=False).order_by("-isDefault")
+        # 渲染数据
+        context = {
+            'addresses':user_addresses
+        }
+        return render(request, 'users/gladdress.html',context=context)

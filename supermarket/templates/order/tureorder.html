@@ -1,0 +1,146 @@
+{% extends 'common/parent.html' %}
+{% load static %}
+{% block title %}
+    确认订单
+{% endblock %}
+
+{% block header %}
+    <header data-am-widget="header" class="am-header am-header-default sq-head ">
+        <div class="am-header-left am-header-nav">
+            <a href="javascript:history.back()" class="">
+                <i class="am-icon-chevron-left"></i>
+            </a>
+        </div>
+        <h1 class="am-header-title">
+            <a href="" class="">确认订单</a>
+        </h1>
+    </header>
+    <div style="height: 49px;"></div>
+{% endblock %}
+
+
+{% block content %}
+    <form method="post" action="">
+        {% csrf_token %}
+        {% if address is None %}
+            <div class="add-address">
+                <a href="{% url '用户:address' %}">+新建收货地址</a>
+                <i class="am-icon-angle-right"></i>
+            </div>
+        {% else %}
+            <h5 class="order-tit">收货人信息</h5>
+            <div class="order-name">
+                <a href="{% url '用户:addresslist' %}">
+                    <p class="order-tele">{{ address.username }}&nbsp;&nbsp;&nbsp;{{ address.phone }}</p>
+                    <p class="order-add">
+                        {{ address.hcity }}{{ address.hproper }}{{ address.harea }} {{ address.brief }}</p>
+                </a>
+                <i class="am-icon-angle-right"></i>
+            </div>
+            <input type="hidden" name="address" value="{{ address.pk }}"/>
+        {% endif %}
+        <div style="background: #eee; height: 10px;"></div>
+        <ul class="shopcart-list" style="padding-bottom: 0;">
+            {% for goods_sku in goods_skus %}
+                <li>
+                    <img src="{{ MEDIA_URL }}{{ goods_sku.logo }}" class="shop-pic"/>
+                    <div class="order-mid">
+                        <div class="tit">{{ goods_sku.goods_spu.spu_name }} {{ goods_sku.sku_name }}</div>
+                        <div class="order-price">￥{{ goods_sku.price }} <i>X{{ goods_sku.count }}</i></div>
+                    </div>
+                    <input type="hidden" name="sku_ids" value="{{ goods_sku.pk }}">
+                </li>
+            {% endfor %}
+        </ul>
+        <ul class="order-infor">
+            <li class="order-infor-first">
+                <span>商品总计：</span>
+                <i>￥<span id="goods_price">{{ goods_total_price }}</span></i>
+            </li>
+            <li class="order-infor-first">
+                <span>运输方式：</span>
+                <i>
+                    <select name="transport" id="transport">
+                        {% for transport in transports %}
+                            <option value="{{ transport.pk }}" price="{{ transport.price }}">
+                                {{ transport.name }}-¥{{ transport.price }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </i>
+            </li>
+            {#        <li class="order-infor-first">#}
+            {#            <a href="">积分抵费></a>#}
+            {#        </li>#}
+            {#        <li class="order-infor-first">#}
+            {#            <a href="">选择优惠券></a>#}
+            {#        </li>#}
+        </ul>
+        <div style="background: #eee; height: 10px;"></div>
+        <textarea placeholder="备注说明" class="bz-infor"></textarea>
+        <div style="background: #eee; height: 10px;"></div>
+        <div style="height: 55px;"></div>
+        <div class="shop-fix">
+            <div class="order-text">
+                应付总额：<span>￥<i id="total_price">0.00</i></span>
+            </div>
+            <a href="javascript:;" class="js-btn">提交订单</a>
+        </div>
+    </form>
+{% endblock %}
+
+
+
+{% block footer %}
+    {% include 'common/footer.html' %}
+{% endblock %}
+
+
+{% block footer_js %}
+    <script>
+        $(function () {
+            //计算应付总金额
+            function totalPrice() {
+                //获取商品的总金额
+                var goods_price = $("#goods_price").text();
+                //获取运费
+                var transport_price = $("#transport").find(":selected").attr('price');
+                //订单总金额
+                var total_price = Number(goods_price) + Number(transport_price);
+                {#console.debug(total_price);#}
+                $("#total_price").text(total_price.toFixed(2));
+            }
+
+            //调用
+            totalPrice();
+
+            //绑定修改事件
+            $("#transport").on("change", function () {
+                //重新计算价格
+                totalPrice();
+            });
+
+
+            //绑定点击事件,提交订单数据
+            $(".js-btn").on("click", function () {
+                //准备数据
+                var data = $("form").serialize();
+                //发送ajax
+                $.ajax({
+                    type:"post",
+                    url:"{% url '订单:确认订单' %}",
+                    data:data,
+                    dataType:"json",
+                    success:function (data) {
+                        if(data.code == 0){
+                            //跳转到确认支付页面
+                            location.href = "{% url '订单:确认支付' %}?order_sn="+data.data;
+                        }else {
+                            alert(data.errmsg);
+                        }
+                    }
+                });
+            })
+        });
+    </script>
+{% endblock %}
