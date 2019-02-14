@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     'order.apps.OrderConfig',
     'ckeditor',  # 添加ckeditor富文本编辑器
     'ckeditor_uploader',  # 添加ckeditor富文本编辑器文件上传部件
+    # 博客
+    'blog_user.apps.BlogUserConfig',
+    'blog_content.apps.ContentConfig',
+    'blog_liuyan.apps.LiuyanConfig',
 ]
 
 MIDDLEWARE = [
@@ -131,6 +135,7 @@ USE_TZ = False
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
+
 ]
 # STATIC_ROOT = os.path.join(BASE_DIR, "static")
 

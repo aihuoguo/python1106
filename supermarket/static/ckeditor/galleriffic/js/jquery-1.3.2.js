@@ -73,7 +73,7 @@ jQuery.fn = jQuery.prototype = {
 				}
 
 			// HANDLE: $(expr, [context])
-			// (which is just equivalent to: $(content).find(expr)
+			// (which is just equivalent to: $(blog_content).find(expr)
 			} else
 				return jQuery( context ).find( selector );
 
@@ -3701,7 +3701,7 @@ jQuery.extend({
 	},
 
 	httpData: function( xhr, type, s ) {
-		var ct = xhr.getResponseHeader("content-type"),
+		var ct = xhr.getResponseHeader("blog_content-type"),
 			xml = type == "xml" || !type && ct && ct.indexOf("xml") >= 0,
 			data = xml ? xhr.responseXML : xhr.responseText;
 
@@ -4073,7 +4073,7 @@ jQuery.fx.prototype = {
 
 		// Begin the animation
 		// Make sure that we start at a small width/height to avoid any
-		// flash of content
+		// flash of blog_content
 		this.custom(this.prop == "width" || this.prop == "height" ? 1 : 0, this.cur());
 
 		// Start by showing the element
