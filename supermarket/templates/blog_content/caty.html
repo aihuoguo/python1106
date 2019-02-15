@@ -19,16 +19,16 @@
 		<nav class="layui-container">
 			<div class="layui-row">
 			    <div class="layui-col-md2 logo">
-			    	<a href="javascript:;"><img src="http://www.muzhuangnet.com/upload/201610/17/201610171329086541.png"></a>
+{#			    	<a href="javascript:;"><img src="http://www.muzhuangnet.com/upload/201610/17/201610171329086541.png"></a>#}
 			    </div>
 			    <div class="layui-col-md8 layui-hide-xs">
 			    	<ul class="layui-nav layui-bg-cyan">
 					  	<li class="layui-nav-item">
-					    	<a href="{% url "content:主页" %}">首页</a>
+					    	<a href="{% url "博客内容:主页" %}">首页</a>
 					  	</li>
                         {% for cate in category %}
                         	<li class="layui-nav-item layui-this">
-					    	<a href="{% url "content:分类" cate.pk%}">{{ cate.cat_title }}<span class="layui-badge-dot"></span></a>
+					    	<a href="{% url "博客内容:分类" cate.pk%}">{{ cate.cat_title }}<span class="layui-badge-dot"></span></a>
 					  	</li>
                         {% endfor %}
 
@@ -43,9 +43,9 @@
 					  	<li class="layui-nav-item" lay-unselect="">
 						    <p href="javascript:;"><img src="{{ MEDIA_URL }}{{ user.head }}" class="layui-nav-img">{{ request.session.tel }}</p>
 						    <dl class="layui-nav-child">
-						      	<dd><a href="{% url "user:个人页面" %}">修改信息</a></dd>
+						      	<dd><a href="{% url "博客用户:个人中心" %}">修改信息</a></dd>
 
-						      	<dd><a href="{% url "user:登录" %}">退了</a></dd>
+						      	<dd><a href="{% url "博客用户:登录" %}">退了</a></dd>
 						    </dl>
 						</li>
 					</ul>
@@ -72,10 +72,10 @@
                     {% for con in content %}
                     <div class="layui-col-md12">
 						<div class="main list">
-							<div class="subject"><p  class="caty">[{{ cate_gory.cat_title }}]</p><a href="{% url "content:详情" con.pk %}">{{ con.con_title }}</a><em>{{ con.add_time }} 发布</em></div>
+							<div class="subject"><p  class="caty">[{{ cate_gory.cat_title }}]</p><a href="{% url "博客内容:详情" con.pk %}">{{ con.con_title }}</a><em>{{ con.add_time }} 发布</em></div>
 							<div class="content layui-row">
 								<div class="layui-col-md4 list-img">
-									<a href="javascript:;"><img src="{% static "images/300.jpg" %}"></a>
+									<a href="javascript:;"><img src="{% static "images/gnh.jpg" %}"></a>
 								</div>
 								<div class="layui-col-md8">
 									<div class="list-text">
@@ -89,7 +89,7 @@
 										</div>
 
 										<div class="layui-col-xs3 layui-col-md3 alink">
-											<a href="{% url "content:详情" con.pk %}" class="layui-btn layui-btn-xs">阅读原文</a>
+											<a href="{% url "博客内容:详情" con.pk %}" class="layui-btn layui-btn-xs">阅读原文</a>
 										</div>
 									</div>
 								</div>
@@ -177,7 +177,7 @@
 								</span>
 						  	</div>
 						  	<div class="layui-card-body" style="text-align: center;">
-						    	<img src="{% static "images/link.jpg" %}" style="display: inline-block;">
+						    	<img src="{% static "images/dhd.jpg" %}" width="100" style="display: inline-block;">
 						    	<br/>
 						    	<p>无论多少，都是心意!</p>
 						  	</div>

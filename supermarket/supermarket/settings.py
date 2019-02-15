@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     # 博客
     'blog_user.apps.BlogUserConfig',
     'blog_content.apps.ContentConfig',
-    'blog_liuyan.apps.LiuyanConfig',
+    'blog_liuyan.apps.BlogLiuyanConfig',
 ]
 
 MIDDLEWARE = [

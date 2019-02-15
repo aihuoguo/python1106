@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from blog_liuyan.forms import CommentForm
-from blog_liuyan.models import Liuyan
+from blog_liuyan.models import Comment
 
 
 def comment(request):
@@ -14,7 +14,7 @@ def comment(request):
         form = CommentForm(data)
         if form.is_valid():
             clean_data = form.cleaned_data
-            msg = Liuyan()
+            msg = Comment()
             msg.context = clean_data.get("context")
             msg.content_id = clean_data.get("content_id")
             msg.user_tel = clean_data.get("user_tel")

@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>超市</title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+        <link rel="icon" type="image/png" href="/theme/default/images/favicon.png">
+		<link href="{% static 'css/amazeui.min.css' %}" rel="stylesheet" type="text/css" />
+		<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+		<script src="{% static 'js/jquery-1.10.2.min.js' %}"></script>
+		<script src="{% static 'js/time.js' %}"></script>
+	</head>
+	<body>
+		<header data-am-widget="header" class="am-header am-header-default sq-head ">
+			<div class="am-header-left am-header-nav">
+				<a href="javascript:history.back()" class="">
+					<i class="am-icon-chevron-left"></i>
+				</a>
+			</div>
+			<h1 class="am-header-title">
+  	            <a href="" class="">注册</a>
+            </h1>
+	    </header>
+	    <div style="height: 49px;"></div>
+	    <!--<div class="login-logo">
+	    	<img src="images/logo.png" />
+	    </div>-->
+	    <div style="height: 3rem;"></div>
+	 <form action="" method="post" accept-charset="utf-8" class="layui-form">
+                        {% csrf_token %}
+						<div class="inputbox">
+							<input type="text" name="tel" id="tel" required  lay-verify="required" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+                            <p placeholder="#cc0000">{{ errors.tel.0 }}</p>
+						</div>
+
+					    <div class="margin20"></div>
+						<div class="inputbox">
+					    	<input type="text" name="password" required  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                            {{ errors.password.0 }}
+						</div>
+
+                         <div class="margin20"></div>
+                        <div class="inputbox">
+					    	<input type="text" name="repassword" required  lay-verify="required" placeholder="请再次输入密码" autocomplete="off" class="layui-input">
+                            <p class="#FFB800">{{ errors.repassword.0 }}</p>
+						</div>
+
+					    <div class="margin20"></div>
+{#						<div class="inputbox">#}
+                        <div class="yzm" style="margin-top: 1.5rem;">
+                            <input type="text" name="captcha" required="" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input" style="width: 112px;">
+                            <input type="button" id="yzm-hq" name="captcha" class="layui-btn layui-btn-danger" value="获取验证码" />
+                            {{ errors.captcha.0 }}
+						</div>
+
+					    <div class="inputbox info">
+					    	<input type="checkbox" name="agree" lay-skin="primary" checked="" />
+					    	我已阅读并同意<a href="javascript:;">用户协议隐私条款</a>
+                            {{ errors.agree.0 }}
+					    </div>
+
+					    <div class="layui-row layui-col-space20 bts">
+
+                            <div class="layui-col-md6">
+{#					    		<a href="javascript:;" class="layui-btn layui-btn-normal">注册</a>#}
+                              <input class="layui-btn" type="submit" value="注册">
+					    	</div>
+
+					    	<div class="layui-col-md6">
+{#					    		<button class="layui-btn" lay-submit lay-filter="formDemo">登陆</button>#}
+                                <a href="{% url "博客用户:登录" %}" class="layui-btn layui-btn-normal">去登陆</a>
+					    	</div>
+
+							<div class="layui-col-md12">
+								<a href="" class="layui-btn layui-btn-danger">返回首页</a>
+							</div>
+					    </div>
+					</form>
+	   
+	</body>
+</html>

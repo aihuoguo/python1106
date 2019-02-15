@@ -11,16 +11,17 @@
   	<meta name="apple-mobile-web-app-capable" content="yes">
   	<meta name="format-detection" content="telephone=no">
 	<title>登陆 - Blog</title>
-	<link rel="stylesheet" href="{% static "layui/css/layui.css" %}">
-	<link rel="stylesheet" href="{% static "css/common.css" %}">
-	<link rel="stylesheet" href="{% static "css/login.css" %}">
+{#	<link rel="stylesheet" href="{% static "layui/css/layui.css" %}">#}
+{#	<link rel="stylesheet" href="{% static "css/common.css" %}">#}
+{#	<link rel="stylesheet" href="{% static "css/login.css" %}">#}
 </head>
 <body>
 	<div class="layui-container">
 		<div class="layui-row">
 			<div class="layui-col-md12 layui-hide-xs xs-hide"></div>
 			<div class="layui-col-md4 layui-col-md-offset4 login-main">
-				<img src="http://www.muzhuangnet.com/upload/201610/17/201610171329086541.png" class="logo">
+{#				<img src="http://www.muzhuangnet.com/upload/201610/17/201610171329086541.png" class="logo">#}
+                <h2>登录</h2>
 				<div class="main formbox">
 					<form action="" method="post" accept-charset="utf-8" class="layui-form">
                         {% csrf_token %}

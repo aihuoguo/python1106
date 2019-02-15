@@ -15,9 +15,6 @@ from blog_user.models import Buser
 import re
 from django_redis import get_redis_connection
 
-from users.helper import send_sms, check_login
-
-
 class RegisterView(View):  # 注册
 
     def get(self, request):
@@ -57,19 +54,19 @@ class LoginView(View):  # 登录
         # 验证数据的合法性
         form = LoginformModel(data)
         if form.is_valid():
-            #接受参数
-            #将数据保存到seeion中
+            # 接受参数
+            # 将数据保存到session中
             user = form.cleaned_data.get("user")
             request.session["id"] = user.pk
             request.session["tel"] = user.tel
             request.session["head"] = user.head
             request.session["status"] = user.status
-            request.session.set_expiry(0)#关闭浏览器就消失
+            # 关闭浏览器就消失
+            request.session.set_expiry(0)
             return redirect(reverse("博客内容:主页"))
-            # return redirect(reverse("blog_content:主页"))
         else:
-            context={"errors":form.errors}
-            return render(request,"blog_user/login.html",context=context)
+            context = {"errors": form.errors}
+            return render(request, "blog_user/login.html", context=context)
 
 
 # 个人中心
@@ -85,22 +82,26 @@ class MemberView(View):
 
 # 发送短信验证注册
 class FsMsgView(View):
-    def get(self,request):
+    def get(self, request):
         pass
-    def post(self,request):
+
+    def post(self, request):
+        # 获取数据
         tel = request.POST.get("tel")
+        # 验证手机号码格式
         rs = re.search("^1[3-9]\d{9}$", tel)
         if rs is None:
-            return JsonResponse({"errrors": 1, "errmsg": "手机号码错误"})
-        random_code = "".join([str(random.randint(0, 9)) for _ in range(4)])
-        print("========验证码为{}======".format(random_code))
+            return JsonResponse({"errrors": 1, "errmsg": "手机号码格式错误"})
+        # 生成随机验证码
+        yz_code = "".join([str(random.randint(0, 9)) for _ in range(4)])
+        print("*****短信验证码为{}******".format(yz_code))
         # 获取redis连接
         r = get_redis_connection()
         # 保存验证码
-        r.set(tel, random_code)
+        r.set(tel, yz_code)
         # 验证码60S后过期
         r.expire(tel, 60)
-        # 创建次数变量
+        # 设置发送次数变量
         key_time = "{}_times".format(tel)
         # 获取当前次数
         now_time = r.get(key_time)
@@ -112,8 +113,8 @@ class FsMsgView(View):
 
         return JsonResponse({"errors": 0})
 
-            # __business_id = uuid.uuid1()
-            # params = "{\"code\":\"%s\",\"product\":\"跳舞的兔子\"}" % yz_cade
-            # # print(params)
-            # rs = send_sms(__business_id, tel, "注册验证", "SMS_2245271", params)
-            # print(rs.decode('utf-8'))
+        # __business_id = uuid.uuid1()
+        # params = "{\"code\":\"%s\",\"product\":\"跳舞的兔子\"}" % yz_cade
+        # # print(params)
+        # rs = send_sms(__business_id, tel, "注册验证", "SMS_2245271", params)
+        # print(rs.decode('utf-8'))

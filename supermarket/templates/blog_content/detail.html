@@ -21,7 +21,7 @@
         <div class="layui-row">
             <div class="layui-col-md2 logo">
                 <a href="javascript:;"><img
-                        src="http://www.muzhuangnet.com/upload/201610/17/201610171329086541.png"></a>
+                        src="{% static 'images/LOGO.gif' %}" width="100"></a>
             </div>
             <div class="layui-col-md8 layui-hide-xs">
                 <ul class="layui-nav layui-bg-cyan">
@@ -49,7 +49,6 @@
         </div>
     </nav>
 </header>
-
 <div class="layui-container">
     <div class="layui-row layui-col-space20">
         <div class="layui-col-md8">
@@ -60,90 +59,71 @@
                             <p>{{ content.con_title }}</p>
                             <div class="layui-row stat">
                                 <div class="layui-col-md3 layui-col-xs12">发布时间：<em>{{ content.add_time }}</em></div>
-                                <div class="layui-col-md2 layui-col-xs6">分类：<a href="javascript:;">PHP</a></div>
-                                <div class="layui-col-md2 layui-col-xs6">作者：<a href="javascript:;">王亮</a></div>
+                                <div class="layui-col-md2 layui-col-xs6">分类：<a href="javascript:;">444</a></div>
+                                <div class="layui-col-md2 layui-col-xs6">作者：<a href="javascript:;">wwww</a></div>
 
                             </div>
                         </div>
-
-
                         <div class="content">
                             <p><img data-original="http://www.muzhuangnet.com/upload/201610/18/201610181557196870.jpg"
-                                    src="{% static "images/15104654ujc1dpat.jpg" %}" alt="" draggable="false"
+                                    src="{% static "images/gnh.jpg" %}" alt="" draggable="false"
                                     style="display: block;"></p>
                             <p>{{ content.brief }}</p>
-                            <pre class="prettyprint lang-cs">代码示例：
-public static double JieCheng(int number)
-{
-    if (number == 0)
-    {
-        return 0;
-    }
 
-    //初始值必须设置为1
-    double result = 1; 
-
-    for (int i = number; i &gt;= 1; i--)
-    {
-        result = result*i;
-    }
-    return result;
-}</pre>
-                           热评： <table class="layui-table">
-  <colgroup>
-    <col width="150">
-    <col width="200">
-    <col>
-  </colgroup>
-  <thead>
-    <tr>
-      <th>昵称</th>
-      <th>评论时间</th>
-      <th>内容</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>贤心</td>
-      <td>2016-11-29</td>
-      <td>人生就像是一场修行</td>
-    </tr>
-    {% for com in comment %}
-     <tr>
-      <td>{{ com.user_tel }}</td>
-      <td>{{ com.add_time }}</td>
-      <td>{{ com.context }}</td>
-    </tr>
-    {% endfor %}
+                            热评：
+                            <table class="layui-table">
+                                <colgroup>
+                                    <col width="150">
+                                    <col width="200">
+                                    <col>
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th>昵称</th>
+                                    <th>评论时间</th>
+                                    <th>内容</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>就是我</td>
+                                    <td>2016-11-29</td>
+                                    <td>人生如梦，似梦非梦</td>
+                                </tr>
+                                {% for com in comment %}
+                                    <tr>
+                                        <td>{{ com.user_tel }}</td>
+                                        <td>{{ com.add_time }}</td>
+                                        <td>{{ com.context }}</td>
+                                    </tr>
+                                {% endfor %}
 
 
-  </tbody>
-</table>
-
-
+                                </tbody>
+                            </table>
 
                             <form action="{% url "博客留言:留言" %}" method="post">
                                 {% csrf_token %}
                                 <div class="layui-form-item layui-form-text">
                                     <input type="hidden" name="content_id" id="content_id" value="{{ con_id }}">
-                                    <input type="hidden" name="user_tel" id="user_tel" value="{{ request.session.tel }}">
+                                    <input type="hidden" name="user_tel" id="user_tel"
+                                           value="{{ request.session.tel }}">
                                     <label class="layui-form-label">评论区</label>
                                     <div class="layui-input-block">
-                                        <textarea name="context" id="context" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                        <textarea name="context" id="context" placeholder="请输入内容"
+                                                  class="layui-textarea"></textarea>
 
 
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-input-block">
-                                        <input type="submit" id="kyo" value="立即提交" class="layui-btn" lay-submit lay-filter="formDemo">
+                                        <input type="submit" id="kyo" value="立即提交" class="layui-btn" lay-submit
+                                               lay-filter="formDemo">
 
                                     </div>
                                 </div>
                             </form>
-
-
-
 
 
                         </div>
@@ -157,43 +137,7 @@ public static double JieCheng(int number)
                     </div>
                 </div>
                 <div class="layui-col-md12 margin20"></div>
-                <div class="layui-col-md12">
-                    <div class="layui-card">
-                        <div class="layui-card-header">
-								<span>
-									相关推荐
-								</span>
-                        </div>
-                        <div class="layui-card-body">
-                            <div class="layui-row">
-                                <div class="layui-col-md4">
-                                    <div class="layui-card">
-                                        <a href="javascript:;" class="layui-card-body recommend">
-                                            <img src="http://www.muzhuangnet.com/upload/201610/18/201610181739277776.jpg">
-                                            <p>用layui做一个独立博客网站（响应式模板）</p>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="layui-col-md4">
-                                    <div class="layui-card">
-                                        <a href="javascript:;" class="layui-card-body recommend">
-                                            <img src="http://www.muzhuangnet.com/upload/201610/18/201610181739277776.jpg">
-                                            <p>用layui做一个独立博客网站（响应式模板）</p>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="layui-col-md4">
-                                    <div class="layui-card">
-                                        <a href="javascript:;" class="layui-card-body recommend">
-                                            <img src="http://www.muzhuangnet.com/upload/201610/18/201610181739277776.jpg">
-                                            <p>用layui做一个独立博客网站（响应式模板）</p>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
 
@@ -265,7 +209,7 @@ public static double JieCheng(int number)
 								</span>
                         </div>
                         <div class="layui-card-body" style="text-align: center;">
-                            <img src="{% static "images/link.jpg" %}" style="display: inline-block;">
+                            <img src="{% static "images/dhd.jpg" %}" width="200" style="display: inline-block;">
                             <br/>
                             <p>无论多少，都是心意!</p>
                         </div>
